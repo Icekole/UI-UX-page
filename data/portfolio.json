@@ -1,0 +1,105 @@
+{
+  "name": "YourName | UI/UX Designer",
+  "headerTaglineOne": "你好 👋",
+  "headerTaglineTwo": "我是你的名字",
+  "headerTaglineThree": "UI/UX 设计师",
+  "headerTaglineFour": "专注于创造优雅、实用的数字体验",
+  "showCursor": false,
+  "showBlog": true,
+  "darkMode": true,
+  "showResume": false,
+  "socials": [
+    {"id": "1", "title": "GitHub", "link": "https://github.com/yourname"},
+    {"id": "2", "title": "LinkedIn", "link": "https://linkedin.com/in/yourname"},
+    {"id": "3", "title": "Dribbble", "link": "https://dribbble.com/yourname"},
+    {"id": "4", "title": "Behance", "link": "https://behance.net/yourname"},
+    {"id": "5", "title": "Email", "link": "mailto:your@email.com"}
+  ],
+  "projects": [
+    {
+      "id": "1",
+      "title": "电商 APP 重新设计",
+      "description": "UI/UX 设计 • 转化率提升 35%",
+      "imageSrc": "https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?w=800&q=80",
+      "url": "https://dribbble.com/yourname"
+    },
+    {
+      "id": "2",
+      "title": "SaaS 数据仪表盘",
+      "description": "数据可视化 • B 端设计",
+      "imageSrc": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+      "url": "https://dribbble.com/yourname"
+    },
+    {
+      "id": "3",
+      "title": "金融理财小程序",
+      "description": "小程序设计 • 用户体验优化",
+      "imageSrc": "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&q=80",
+      "url": "https://dribbble.com/yourname"
+    },
+    {
+      "id": "4",
+      "title": "设计系统搭建",
+      "description": "Design System • 组件库",
+      "imageSrc": "https://images.unsplash.com/photo-1586717791821-3f44a5638d48?w=800&q=80",
+      "url": "https://dribbble.com/yourname"
+    }
+  ],
+  "services": [
+    {
+      "title": "🎨 UI 设计",
+      "description": "网页设计 / 移动应用 / 小程序 / 后台系统"
+    },
+    {
+      "title": "💡 用户体验",
+      "description": "用户研究 / 交互设计 / 原型制作 / 可用性测试"
+    },
+    {
+      "title": "📦 设计系统",
+      "description": "组件库搭建 / 设计规范 / 设计令牌 / 文档编写"
+    },
+    {
+      "title": "🎯 产品咨询",
+      "description": "产品定位 / 竞品分析 / 设计评审 / 团队培训"
+    }
+  ],
+  "aboutpara": "我是一名 UI/UX 设计师，拥有 X 年行业经验。曾服务于多家互联网公司和设计机构，主导过多个从 0 到 1 的产品设计项目。我相信好的设计应该是无形的，让用户自然地完成任务。工作之余，我喜欢分享设计经验、参与开源项目，以及探索新的设计趋势。",
+  "resources": [
+    {
+      "category": "设计灵感",
+      "links": [
+        {"name": "Dribbble", "url": "https://dribbble.com", "desc": "全球设计师创意分享平台"},
+        {"name": "Behance", "url": "https://behance.net", "desc": "Adobe 旗下创意作品展示平台"},
+        {"name": "Pinterest", "url": "https://pinterest.com", "desc": "灵感图片收集与分享"},
+        {"name": "站酷", "url": "https://zcool.com.cn", "desc": "国内设计师互动社区"}
+      ]
+    },
+    {
+      "category": "设计工具",
+      "links": [
+        {"name": "Figma", "url": "https://figma.com", "desc": "在线协作设计工具"},
+        {"name": "Sketch", "url": "https://sketch.com", "desc": "Mac 平台 UI 设计工具"},
+        {"name": "Adobe XD", "url": "https://adobe.com/products/xd", "desc": "Adobe 体验设计工具"},
+        {"name": "Principle", "url": "https://principleformac.com", "desc": "交互动效设计工具"}
+      ]
+    },
+    {
+      "category": "设计资源",
+      "links": [
+        {"name": "Unsplash", "url": "https://unsplash.com", "desc": "免费高质量图片"},
+        {"name": "IconFont", "url": "https://iconfont.cn", "desc": "阿里巴巴矢量图标库"},
+        {"name": "Google Fonts", "url": "https://fonts.google.com", "desc": "免费字体库"},
+        {"name": "ColorHunt", "url": "https://colorhunt.co", "desc": "配色方案灵感"}
+      ]
+    },
+    {
+      "category": "学习成长",
+      "links": [
+        {"name": "NN/g", "url": "https://nngroup.com", "desc": "用户体验研究权威"},
+        {"name": "Medium", "url": "https://medium.com", "desc": "设计文章分享平台"},
+        {"name": "优设网", "url": "https://uisdc.com", "desc": "设计师学习平台"},
+        {"name": "IXDC", "url": "https://ixdc.org", "desc": "国际体验设计大会"}
+      ]
+    }
+  ]
+}
