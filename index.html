@@ -1,0 +1,1208 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>个人网站交互原型</title>
+    <style>
+      :root {
+        --bg: #05060a;
+        --panel: rgba(8, 11, 18, 0.78);
+        --panel-strong: rgba(11, 15, 26, 0.94);
+        --line: rgba(255, 255, 255, 0.14);
+        --text: #f5f7fa;
+        --muted: #a9b3bd;
+        --faint: #697782;
+        --cyan: #00d7ff;
+        --cyan-strong: #00a8d8;
+        --magenta: #ff3df2;
+        --acid: #caff3d;
+        --warm: #e3d2aa;
+        --danger: #ef6f6c;
+        --shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 16% 16%, rgba(0, 215, 255, 0.16), transparent 30%),
+          radial-gradient(circle at 76% 18%, rgba(255, 61, 242, 0.12), transparent 28%),
+          radial-gradient(circle at 82% 76%, rgba(202, 255, 61, 0.08), transparent 26%),
+          linear-gradient(135deg, #05060a 0%, #111827 58%, #3a424a 100%);
+        font-family: Inter, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+        letter-spacing: 0;
+        overflow: hidden;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button,
+      a {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      button:focus-visible,
+      a:focus-visible {
+        outline: 2px solid var(--cyan);
+        outline-offset: 4px;
+      }
+
+      .shell {
+        width: 100%;
+        min-height: 100dvh;
+        margin: 0;
+        padding: 24px;
+        display: flex;
+      }
+
+      .stage {
+        width: 100%;
+        height: calc(100dvh - 48px);
+        min-height: calc(100dvh - 48px);
+        overflow: hidden;
+        position: relative;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background:
+          linear-gradient(90deg, rgba(3, 5, 9, 0.94) 0%, rgba(3, 5, 9, 0.72) 46%, rgba(3, 5, 9, 0.42) 100%),
+          linear-gradient(135deg, rgba(0, 215, 255, 0.2), rgba(255, 61, 242, 0.12) 46%, transparent 72%),
+          url("https://unsplash.com/photos/oJqR8YK8Gnk/download?force=true&w=1800") center / cover;
+        box-shadow: var(--shadow);
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(122, 145, 158, 0.44) transparent;
+      }
+
+      .stage::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      .stage::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .stage::-webkit-scrollbar-thumb {
+        border: 3px solid transparent;
+        border-radius: 999px;
+        background:
+          linear-gradient(180deg, rgba(154, 174, 185, 0.44), rgba(0, 215, 255, 0.24), rgba(255, 61, 242, 0.18))
+          padding-box;
+      }
+
+      .stage::-webkit-scrollbar-thumb:hover {
+        background:
+          linear-gradient(180deg, rgba(178, 196, 206, 0.58), rgba(0, 215, 255, 0.36), rgba(255, 61, 242, 0.28))
+          padding-box;
+      }
+
+      .stage::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        opacity: 0.28;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+        background-size: 72px 72px;
+        mask-image: linear-gradient(90deg, #000 0%, transparent 78%);
+      }
+
+      .stage::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background:
+          repeating-radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 4px),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 22%),
+          radial-gradient(circle at 80% 72%, rgba(0, 215, 255, 0.2), transparent 28%);
+        mix-blend-mode: screen;
+        opacity: 0.76;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 22px 30px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(8px);
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        flex-wrap: wrap;
+      }
+
+      .nav button,
+      .ghost-button {
+        min-height: 44px;
+        border: 0;
+        color: var(--text);
+        background: transparent;
+        cursor: pointer;
+        font: inherit;
+      }
+
+      .nav button {
+        padding: 0;
+        font-size: 12px;
+        color: #d9e1e8;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        transition: color 160ms ease, opacity 160ms ease;
+      }
+
+      .nav button:hover,
+      .ghost-button:hover {
+        color: var(--cyan);
+      }
+
+      .nav button.active {
+        color: var(--cyan);
+      }
+
+      .contact-mini {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #d7dee5;
+        font-size: 12px;
+        white-space: nowrap;
+      }
+
+      .phone-mark {
+        width: 10px;
+        height: 15px;
+        border: 1px solid currentColor;
+        border-radius: 2px;
+        display: inline-block;
+        position: relative;
+      }
+
+      .phone-mark::after {
+        content: "";
+        width: 3px;
+        height: 1px;
+        background: currentColor;
+        position: absolute;
+        left: 50%;
+        bottom: 2px;
+        transform: translateX(-50%);
+      }
+
+      .view {
+        display: none;
+        position: relative;
+        z-index: 2;
+        min-height: calc(100dvh - 136px);
+        padding: 48px 92px 62px;
+      }
+
+      .view.active {
+        display: grid;
+        animation: viewIn 240ms ease-out;
+      }
+
+      @keyframes viewIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .home-view {
+        grid-template-columns: minmax(0, 1fr);
+        align-items: center;
+        gap: 56px;
+        padding-bottom: 162px;
+      }
+
+      .home-view > div:first-child {
+        max-width: 760px;
+      }
+
+      .eyebrow {
+        margin: 0 0 18px;
+        color: var(--acid);
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      .hero-title {
+        position: relative;
+        margin-bottom: 14px;
+        font-size: clamp(48px, 8.6vw, 108px);
+        line-height: 0.86;
+        font-weight: 900;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      .hero-title span {
+        display: inline-block;
+        width: fit-content;
+        background: linear-gradient(90deg, #ffffff 0%, #dce9f1 46%, rgba(0, 215, 255, 0.78) 100%);
+        -webkit-background-clip: text;
+        color: transparent;
+      }
+
+      .hero-title span:last-child {
+        transform: none;
+        text-shadow: 0 0 36px rgba(0, 215, 255, 0.16);
+      }
+
+      .hero-role {
+        margin-bottom: 30px;
+        color: #dfe7ee;
+        font-size: clamp(18px, 2vw, 26px);
+        letter-spacing: 0.24em;
+      }
+
+      .hero-copy {
+        max-width: 520px;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.8;
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-top: 30px;
+      }
+
+      .pill {
+        min-height: 44px;
+        min-width: 132px;
+        padding: 0 22px;
+        border: 1px solid rgba(255, 255, 255, 0.76);
+        border-radius: 999px;
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.03);
+        cursor: pointer;
+        font: inherit;
+        transition: 180ms ease;
+      }
+
+      .pill.primary {
+        border-color: var(--cyan);
+        color: #e9fbff;
+        background: linear-gradient(90deg, rgba(0, 215, 255, 0.18), rgba(255, 61, 242, 0.12));
+      }
+
+      .pill:hover {
+        transform: translateY(-2px);
+        border-color: var(--cyan);
+      }
+
+      .metric-strip {
+        position: absolute;
+        left: 92px;
+        bottom: 32px;
+        width: min(680px, calc(100% - 184px));
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(255, 255, 255, 0.12);
+        transform: skew(-4deg);
+      }
+
+      .metric {
+        padding: 22px;
+        background: rgba(4, 8, 12, 0.7);
+        backdrop-filter: blur(10px);
+      }
+
+      .metric > * {
+        display: block;
+        transform: skew(4deg);
+      }
+
+      .metric strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 26px;
+      }
+
+      .metric span {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .split-view {
+        grid-template-columns: minmax(280px, 0.74fr) minmax(320px, 1fr);
+        align-items: center;
+        gap: 70px;
+      }
+
+      .portrait {
+        min-height: 430px;
+        border-left: 1px solid rgba(255, 255, 255, 0.12);
+        background:
+          linear-gradient(90deg, rgba(7, 11, 15, 0.82), rgba(7, 11, 15, 0.16)),
+          linear-gradient(135deg, rgba(0, 215, 255, 0.12), rgba(255, 61, 242, 0.16)),
+          url("https://unsplash.com/photos/6ZT8gqA-LHA/download?force=true&w=1200") center / cover;
+        filter: saturate(0.72) contrast(1.16);
+        clip-path: polygon(8% 0, 100% 0, 92% 100%, 0 100%);
+      }
+
+      .section-title {
+        display: inline-block;
+        margin-bottom: 6px;
+        border-bottom: 2px solid var(--magenta);
+        font-size: clamp(28px, 4vw, 44px);
+        line-height: 1;
+        font-weight: 900;
+      }
+
+      .email {
+        margin-bottom: 78px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .body-copy {
+        max-width: 470px;
+        color: #e8eef3;
+        font-size: 16px;
+        line-height: 1.7;
+      }
+
+      .location {
+        margin-top: 96px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .resume-grid {
+        grid-template-columns: 1fr 1.35fr 0.9fr;
+        gap: 54px;
+        align-items: start;
+      }
+
+      .panel-title {
+        display: inline-block;
+        margin-bottom: 24px;
+        border-bottom: 2px solid var(--cyan);
+        font-size: 18px;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .skill-row {
+        display: grid;
+        grid-template-columns: 96px 1fr 34px;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 18px;
+        color: #dfe7ee;
+        font-size: 13px;
+      }
+
+      .bar {
+        height: 1px;
+        background: rgba(255, 255, 255, 0.34);
+        position: relative;
+      }
+
+      .bar span {
+        position: absolute;
+        left: 0;
+        top: -1px;
+        height: 3px;
+        background: var(--cyan);
+      }
+
+      .bar i {
+        position: absolute;
+        top: -5px;
+        width: 11px;
+        height: 11px;
+        border: 1px solid #e6eef4;
+        border-radius: 50%;
+        background: #17212b;
+        transform: translateX(-50%);
+      }
+
+      .timeline {
+        display: grid;
+        gap: 26px;
+      }
+
+      .timeline-item {
+        position: relative;
+        padding-left: 54px;
+      }
+
+      .timeline-item::before {
+        content: attr(data-year);
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 35px;
+        height: 35px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        color: #ecfbff;
+        background: var(--cyan-strong);
+        font-size: 10px;
+        line-height: 1.1;
+      }
+
+      .timeline-item h3 {
+        margin-bottom: 5px;
+        font-size: 16px;
+      }
+
+      .timeline-item p,
+      .small-list li {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .small-list {
+        margin: 0 0 40px;
+        padding: 0;
+        list-style: none;
+      }
+
+      .small-list li {
+        margin-bottom: 10px;
+      }
+
+      .portfolio-view,
+      .blog-view,
+      .resources-view {
+        align-content: start;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 28px;
+      }
+
+      .section-head p {
+        max-width: 560px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .filters {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 28px;
+      }
+
+      .filter {
+        min-height: 38px;
+        padding: 0 16px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        cursor: pointer;
+        transition: border-color 160ms ease, background 160ms ease, color 160ms ease, transform 160ms ease;
+      }
+
+      .filter:hover {
+        color: var(--text);
+        border-color: rgba(154, 174, 185, 0.52);
+        background: rgba(255, 255, 255, 0.07);
+        transform: translateY(-1px);
+      }
+
+      .filter.active {
+        color: var(--text);
+        border-color: var(--cyan);
+        background: rgba(20, 184, 212, 0.14);
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+
+      .card {
+        position: relative;
+        min-height: 240px;
+        padding: 22px;
+        border: 0;
+        background:
+          linear-gradient(135deg, rgba(0, 215, 255, 0.08), transparent 36%),
+          var(--panel);
+        cursor: pointer;
+        transition: 180ms ease;
+        clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%);
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        padding: 1px;
+        pointer-events: none;
+        background: rgba(255, 255, 255, 0.16);
+        clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%);
+        -webkit-mask:
+          linear-gradient(#000 0 0) content-box,
+          linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        transition: background 180ms ease;
+      }
+
+      .card:hover {
+        transform: translateY(-4px);
+        background:
+          linear-gradient(135deg, rgba(0, 215, 255, 0.14), rgba(255, 61, 242, 0.06) 46%, transparent 72%),
+          var(--panel-strong);
+      }
+
+      .card:hover::before {
+        background: linear-gradient(135deg, rgba(0, 215, 255, 0.62), rgba(255, 61, 242, 0.38));
+      }
+
+      .card > * {
+        position: relative;
+        z-index: 2;
+      }
+
+      .card small {
+        display: block;
+        margin-bottom: 42px;
+        color: var(--acid);
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .card h3 {
+        min-height: 56px;
+        margin-bottom: 14px;
+        font-size: 22px;
+        line-height: 1.25;
+      }
+
+      .card p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      .tagline {
+        margin-top: 16px;
+        color: var(--warm);
+        font-size: 13px;
+      }
+
+      .blog-list,
+      .resource-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+
+      .row-card {
+        padding: 22px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background:
+          linear-gradient(120deg, rgba(255, 61, 242, 0.08), transparent 40%),
+          rgba(7, 11, 15, 0.76);
+        backdrop-filter: blur(8px);
+        cursor: pointer;
+        transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+      }
+
+      .row-card:hover {
+        transform: translateY(-3px);
+        border-color: rgba(154, 174, 185, 0.48);
+        background:
+          linear-gradient(120deg, rgba(0, 215, 255, 0.1), rgba(255, 61, 242, 0.08) 48%, transparent 76%),
+          rgba(10, 15, 24, 0.88);
+        box-shadow: 0 16px 42px rgba(0, 0, 0, 0.22);
+      }
+
+      .card:focus-visible,
+      .row-card:focus-visible {
+        outline: 2px solid rgba(0, 215, 255, 0.76);
+        outline-offset: 4px;
+      }
+
+      .row-card h3 {
+        margin-bottom: 10px;
+        font-size: 20px;
+      }
+
+      .row-card p {
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .drawer {
+        position: fixed;
+        inset: 0;
+        z-index: 20;
+        display: none;
+        background: rgba(0, 0, 0, 0.62);
+      }
+
+      .drawer.open {
+        display: grid;
+        place-items: center;
+      }
+
+      .drawer-panel {
+        width: min(620px, calc(100% - 40px));
+        padding: 34px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: #0d141b;
+        box-shadow: var(--shadow);
+      }
+
+      .drawer-panel h2 {
+        margin-bottom: 14px;
+        font-size: 28px;
+      }
+
+      .drawer-panel p {
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .close-row {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 28px;
+      }
+
+      .status {
+        position: absolute;
+        right: 28px;
+        bottom: 24px;
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .fullscreen-mark {
+        width: 18px;
+        height: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.58);
+        position: relative;
+      }
+
+      .city-label {
+        position: absolute;
+        right: 30px;
+        top: 104px;
+        z-index: 3;
+        writing-mode: vertical-rl;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 12px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+
+      @media (max-width: 900px) {
+        .shell {
+          width: 100%;
+          min-height: 100dvh;
+          margin: 0;
+          padding: 12px;
+        }
+
+        .stage {
+          height: calc(100dvh - 24px);
+          min-height: calc(100dvh - 24px);
+        }
+
+        .topbar {
+          align-items: flex-start;
+          padding: 18px;
+        }
+
+        .nav {
+          gap: 16px;
+        }
+
+        .view {
+          min-height: calc(100dvh - 112px);
+          padding: 34px 24px 72px;
+        }
+
+        .home-view,
+        .split-view,
+        .resume-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .metric-strip,
+        .cards,
+        .blog-list,
+        .resource-list {
+          grid-template-columns: 1fr;
+        }
+
+        .home-view {
+          padding-bottom: 34px;
+        }
+
+        .metric-strip {
+          position: static;
+          width: 100%;
+        }
+
+        .portrait {
+          min-height: 280px;
+          clip-path: none;
+        }
+
+        .section-head {
+          display: block;
+        }
+
+        .city-label {
+          display: none;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          animation-duration: 1ms !important;
+          transition-duration: 1ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="stage" aria-label="个人门户网站原型">
+        <header class="topbar">
+          <nav class="nav" aria-label="主导航">
+            <button class="active" data-view="home">首页</button>
+            <button data-view="about">关于</button>
+            <button data-view="resume">简历</button>
+            <button data-view="portfolio">作品集</button>
+            <button data-view="blog">博客</button>
+            <button data-view="resources">导航</button>
+          </nav>
+          <button class="ghost-button contact-mini" data-open-contact>
+            <span class="phone-mark" aria-hidden="true"></span>
+            小林同学 / 设计&产品
+          </button>
+        </header>
+
+        <section class="view home-view active" data-panel="home">
+          <div>
+            <p class="eyebrow">Wuhan</p>
+            <h1 class="hero-title">
+              <span>个人主页</span>
+            </h1>
+            <p class="hero-role">设计 · 产品 · AI</p>
+            <p class="hero-copy">
+              从用户体验、业务目标和落地协作之间建立清晰连接。这里聚合我的设计作品、产品项目、方法论文章和常用工作导航。
+            </p>
+            <div class="actions">
+              <button class="pill primary" data-view="portfolio">查看作品集</button>
+              <button class="pill" data-view="blog">阅读博客</button>
+            </div>
+          </div>
+
+          <div class="metric-strip" aria-label="能力摘要">
+            <div class="metric">
+              <strong>UI/UX</strong>
+              <span>设计系统、交互、体验评审</span>
+            </div>
+            <div class="metric">
+              <strong>PM</strong>
+              <span>需求拆解、流程、排期推进</span>
+            </div>
+            <div class="metric">
+              <strong>AI</strong>
+              <span>原型提效、知识整理、工具链</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="view split-view" data-panel="about">
+          <div>
+            <h2 class="section-title">关于我</h2>
+            <p class="email">hello@yourdomain.com</p>
+            <p class="body-copy">
+              我曾长期参与 UI/UX 设计、产品体验优化和设计系统建设，现在更关注如何把体验洞察转化为可执行的产品方案。这个网站不是单纯作品集，而是我的个人门户：用于展示案例、沉淀文章，也承载日常使用的产品与设计导航。
+            </p>
+            <p class="location">武汉 / 远程 · 产品设计 · 产品管理</p>
+          </div>
+          <div class="portrait" role="img" aria-label="深色人像视觉占位"></div>
+        </section>
+
+        <section class="view resume-grid" data-panel="resume">
+          <div>
+            <h2 class="panel-title">产品能力</h2>
+            <div class="skill-row"><span>需求分析</span><div class="bar"><span style="width: 88%"></span><i style="left: 88%"></i></div><span>88</span></div>
+            <div class="skill-row"><span>原型设计</span><div class="bar"><span style="width: 92%"></span><i style="left: 92%"></i></div><span>92</span></div>
+            <div class="skill-row"><span>业务流程</span><div class="bar"><span style="width: 82%"></span><i style="left: 82%"></i></div><span>82</span></div>
+            <div class="skill-row"><span>数据复盘</span><div class="bar"><span style="width: 76%"></span><i style="left: 76%"></i></div><span>76</span></div>
+            <div class="skill-row"><span>AI 提效</span><div class="bar"><span style="width: 84%"></span><i style="left: 84%"></i></div><span>84</span></div>
+          </div>
+
+          <div>
+            <h2 class="panel-title">经历线索</h2>
+            <div class="timeline">
+              <article class="timeline-item" data-year="Now">
+                <h3>产品方向转型</h3>
+                <p>从体验设计切入产品规划，关注需求定义、业务流程、跨角色协作和落地质量。</p>
+              </article>
+              <article class="timeline-item" data-year="UX">
+                <h3>设计系统与 B 端体验</h3>
+                <p>建设组件规范、优化复杂后台流程，推动设计资产复用和体验一致性。</p>
+              </article>
+              <article class="timeline-item" data-year="AI">
+                <h3>AI 工作流探索</h3>
+                <p>将 AI 用于需求分析、原型构思、文档整理和个人知识库建设。</p>
+              </article>
+            </div>
+          </div>
+
+          <aside>
+            <h2 class="panel-title">我能做什么</h2>
+            <ul class="small-list">
+              <li>产品需求分析与 PRD 梳理</li>
+              <li>B 端流程体验优化</li>
+              <li>设计系统与组件规范</li>
+              <li>AI 工具链与效率方案</li>
+            </ul>
+            <h2 class="panel-title">关注方向</h2>
+            <ul class="small-list">
+              <li>教育产品</li>
+              <li>SaaS 后台</li>
+              <li>知识管理</li>
+              <li>个人门户与自动化</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="view portfolio-view" data-panel="portfolio">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">作品集</h2>
+              <p>作品集不只展示视觉结果，更强调问题定义、产品判断、协作过程和结果复盘。</p>
+            </div>
+          </div>
+          <div class="filters" aria-label="案例筛选">
+            <button class="filter active" data-filter="all">全部</button>
+            <button class="filter" data-filter="product">产品项目</button>
+            <button class="filter" data-filter="design">设计作品</button>
+            <button class="filter" data-filter="method">方法论</button>
+          </div>
+          <div class="cards" id="caseCards"></div>
+        </section>
+
+        <section class="view blog-view" data-panel="blog">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">博客</h2>
+              <p>用于沉淀产品转型、设计复盘、AI 工作流和个人知识管理。</p>
+            </div>
+          </div>
+          <div class="blog-list">
+            <article class="row-card">
+              <h3>从设计评审到产品决策</h3>
+              <p>记录一次从界面问题反推业务目标、数据指标和协作机制的过程。</p>
+              <div class="tagline">产品方法 · 8 分钟阅读</div>
+            </article>
+            <article class="row-card">
+              <h3>如何整理一个可复用的案例模板</h3>
+              <p>把作品集从“看图”升级为“看判断”，让案例更适合产品岗位表达。</p>
+              <div class="tagline">作品集 · 6 分钟阅读</div>
+            </article>
+            <article class="row-card">
+              <h3>AI 辅助 PRD 的边界</h3>
+              <p>哪些环节适合交给 AI，哪些判断必须由产品负责人自己完成。</p>
+              <div class="tagline">AI 工作流 · 10 分钟阅读</div>
+            </article>
+            <article class="row-card">
+              <h3>B 端页面的信息密度</h3>
+              <p>在效率、可读性和业务复杂度之间找到稳定的设计尺度。</p>
+              <div class="tagline">B 端体验 · 7 分钟阅读</div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view resources-view" data-panel="resources">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">导航</h2>
+              <p>聚合设计、产品、AI、研发、效率工具，作为个人日常工作入口。</p>
+            </div>
+          </div>
+          <div class="filters" aria-label="资源分类">
+            <button class="filter active" data-resource="design">设计</button>
+            <button class="filter" data-resource="product">产品</button>
+            <button class="filter" data-resource="ai">AI</button>
+            <button class="filter" data-resource="dev">研发</button>
+          </div>
+          <div class="resource-list" id="resourceList"></div>
+        </section>
+
+        <div class="city-label">武汉 · 江城 · 面向未来</div>
+        <div class="status"><span>可交互 HTML 原型</span><span class="fullscreen-mark" aria-hidden="true"></span></div>
+      </section>
+    </main>
+
+    <div class="drawer" id="detailDrawer" aria-hidden="true">
+      <div class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+        <h2 id="drawerTitle">作品详情</h2>
+        <p id="drawerBody"></p>
+        <div class="close-row">
+          <button class="pill primary" id="closeDrawer">关闭</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const views = document.querySelectorAll("[data-view]");
+      const navButtons = document.querySelectorAll(".nav [data-view]");
+      const panels = document.querySelectorAll("[data-panel]");
+
+      function showView(name) {
+        panels.forEach((panel) => panel.classList.toggle("active", panel.dataset.panel === name));
+        navButtons.forEach((button) => button.classList.toggle("active", button.dataset.view === name));
+      }
+
+      views.forEach((button) => {
+        button.addEventListener("click", () => showView(button.dataset.view));
+      });
+
+      const cases = [
+        {
+          type: "product",
+          label: "产品项目",
+          title: "AI 助教学习路径优化",
+          desc: "从学生学习断点出发，拆解推荐逻辑、任务路径和反馈机制。",
+          result: "目标：提升学习路径完成率与错题回访率。"
+        },
+        {
+          type: "design",
+          label: "设计作品",
+          title: "B 端数据仪表盘体验重构",
+          desc: "重新组织指标层级、筛选路径和图表密度，降低管理者阅读成本。",
+          result: "目标：让关键指标在首屏可判断、可追踪。"
+        },
+        {
+          type: "method",
+          label: "方法论",
+          title: "从设计稿到 PRD 的转译框架",
+          desc: "把视觉方案拆解为目标、规则、边界、状态和验收标准。",
+          result: "目标：提高设计与开发、测试之间的信息一致性。"
+        },
+        {
+          type: "product",
+          label: "产品项目",
+          title: "快捷导航与知识入口",
+          desc: "围绕个人高频工作流整理工具、资料、模板和案例入口。",
+          result: "目标：减少重复查找成本，形成可维护的门户资产。"
+        },
+        {
+          type: "design",
+          label: "设计作品",
+          title: "个人品牌深色视觉系统",
+          desc: "参考摄影感深色作品集，建立高对比、低干扰的展示风格。",
+          result: "目标：突出专业感和个人识别度。"
+        },
+        {
+          type: "method",
+          label: "方法论",
+          title: "产品复盘模板",
+          desc: "统一记录背景、假设、指标、动作、结果和后续策略。",
+          result: "目标：让每个项目沉淀为可复用经验。"
+        }
+      ];
+
+      const resources = {
+        design: [
+          ["Figma", "设计协作、原型和组件库"],
+          ["Mobbin", "移动端产品界面参考"],
+          ["Dribbble", "视觉灵感和作品发布"],
+          ["IconFont", "中文图标资源库"]
+        ],
+        product: [
+          ["Notion", "需求、知识库和项目整理"],
+          ["Linear", "任务流转和缺陷跟踪"],
+          ["Google Analytics", "基础访问与转化分析"],
+          ["飞书文档", "团队协作和 PRD 维护"]
+        ],
+        ai: [
+          ["ChatGPT", "需求分析、原型思考和文本整理"],
+          ["Perplexity", "资料检索和竞品研究"],
+          ["Midjourney", "视觉概念探索"],
+          ["Cursor", "代码辅助和原型开发"]
+        ],
+        dev: [
+          ["GitHub", "代码仓库与发布流程"],
+          ["Vercel", "前端部署与预览"],
+          ["MDN", "Web 标准查询"],
+          ["Tailwind CSS", "界面样式快速构建"]
+        ]
+      };
+
+      const caseCards = document.getElementById("caseCards");
+      const detailDrawer = document.getElementById("detailDrawer");
+      const drawerTitle = document.getElementById("drawerTitle");
+      const drawerBody = document.getElementById("drawerBody");
+      const closeDrawer = document.getElementById("closeDrawer");
+
+      function renderCases(type = "all") {
+        caseCards.innerHTML = "";
+        cases
+          .filter((item) => type === "all" || item.type === type)
+          .forEach((item) => {
+            const card = document.createElement("article");
+            card.className = "card";
+            card.tabIndex = 0;
+            card.innerHTML = `<small>${item.label}</small><h3>${item.title}</h3><p>${item.desc}</p><div class="tagline">${item.result}</div>`;
+            card.addEventListener("click", () => openDrawer(item));
+            card.addEventListener("keydown", (event) => {
+              if (event.key === "Enter") openDrawer(item);
+            });
+            caseCards.appendChild(card);
+          });
+      }
+
+      function openDrawer(item) {
+        drawerTitle.textContent = item.title;
+        drawerBody.textContent = `${item.desc} 后续详情页建议按“项目背景、我的角色、问题定义、目标指标、关键方案、结果复盘”展开。`;
+        detailDrawer.classList.add("open");
+        detailDrawer.setAttribute("aria-hidden", "false");
+        closeDrawer.focus();
+      }
+
+      function closeDetail() {
+        detailDrawer.classList.remove("open");
+        detailDrawer.setAttribute("aria-hidden", "true");
+      }
+
+      document.querySelectorAll("[data-filter]").forEach((button) => {
+        button.addEventListener("click", () => {
+          document.querySelectorAll("[data-filter]").forEach((item) => item.classList.remove("active"));
+          button.classList.add("active");
+          renderCases(button.dataset.filter);
+        });
+      });
+
+      const resourceList = document.getElementById("resourceList");
+
+      function renderResources(type = "design") {
+        resourceList.innerHTML = "";
+        resources[type].forEach(([name, desc]) => {
+          const item = document.createElement("a");
+          item.className = "row-card";
+          item.href = "#";
+          item.innerHTML = `<h3>${name}</h3><p>${desc}</p><div class="tagline">打开外部工具</div>`;
+          item.addEventListener("click", (event) => {
+            event.preventDefault();
+            openDrawer({
+              title: name,
+              desc,
+              result: "正式站点中这里会新窗口打开对应工具。"
+            });
+          });
+          resourceList.appendChild(item);
+        });
+      }
+
+      document.querySelectorAll("[data-resource]").forEach((button) => {
+        button.addEventListener("click", () => {
+          document.querySelectorAll("[data-resource]").forEach((item) => item.classList.remove("active"));
+          button.classList.add("active");
+          renderResources(button.dataset.resource);
+        });
+      });
+
+      document.querySelectorAll(".blog-list .row-card").forEach((card) => {
+        card.tabIndex = 0;
+        const openArticle = () => {
+          openDrawer({
+            title: card.querySelector("h3").textContent,
+            desc: card.querySelector("p").textContent,
+            result: "正式站点中这里会进入博客详情页。"
+          });
+        };
+        card.addEventListener("click", openArticle);
+        card.addEventListener("keydown", (event) => {
+          if (event.key === "Enter") openArticle();
+        });
+      });
+
+      document.querySelector("[data-open-contact]").addEventListener("click", () => {
+        openDrawer({
+          title: "联系我",
+          desc: "可以在这里放邮箱、微信二维码、GitHub、Figma、LinkedIn 或作品平台入口。",
+          result: "建议正式站点优先使用邮箱和作品平台链接。"
+        });
+      });
+
+      closeDrawer.addEventListener("click", closeDetail);
+      detailDrawer.addEventListener("click", (event) => {
+        if (event.target === detailDrawer) closeDetail();
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeDetail();
+      });
+
+      renderCases();
+      renderResources();
+    </script>
+  </body>
+</html>
