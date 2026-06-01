@@ -1,0 +1,29 @@
+{
+  "inputs": [],
+  "servers": {
+    "figma": {
+      "url": "https://mcp.figma.com/mcp",
+      "type": "http"
+    },
+    "notion": {
+      "type": "http",
+      "url": "https://mcp.notion.com/mcp"
+    },
+    "pencil": {
+      "command": "C:\\Users\\<YOUR_WINDOWS_USER>\\.pencil\\mcp\\visual_studio_code\\out\\mcp-server-win32-x64.exe",
+      "args": [
+        "--app",
+        "visual_studio_code"
+      ],
+      "env": {},
+      "type": "stdio"
+    },
+    "stitch": {
+      "type": "http",
+      "url": "https://stitch.googleapis.com/mcp",
+      "headers": {
+        "X-Goog-Api-Key": "<YOUR_STITCH_API_KEY>"
+      }
+    }
+  }
+}
