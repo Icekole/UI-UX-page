@@ -1,0 +1,4 @@
+interface:
+  display_name: "设计规范实现"
+  short_description: "按项目颜色与字体规范实现代码"
+  default_prompt: "Use $implement-with-design-tokens to implement the approved design with the repository design tokens."

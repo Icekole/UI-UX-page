@@ -1,0 +1,895 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>小林同学 · 个人门户</title>
+    <style>
+      :root {
+        --bg: #05060a;
+        --panel: rgba(8, 11, 18, 0.78);
+        --panel-strong: rgba(11, 15, 26, 0.94);
+        --line: rgba(255, 255, 255, 0.14);
+        --text: #f5f7fa;
+        --muted: #a9b3bd;
+        --faint: #697782;
+        --cyan: #00d7ff;
+        --cyan-strong: #00a8d8;
+        --magenta: #ff3df2;
+        --acid: #caff3d;
+        --warm: #e3d2aa;
+        --shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 16% 16%, rgba(0, 215, 255, 0.16), transparent 30%),
+          radial-gradient(circle at 76% 18%, rgba(255, 61, 242, 0.12), transparent 28%),
+          radial-gradient(circle at 82% 76%, rgba(202, 255, 61, 0.08), transparent 26%),
+          linear-gradient(135deg, #05060a 0%, #111827 58%, #3a424a 100%);
+        font-family: Inter, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+        overflow: hidden;
+      }
+
+      a { color: inherit; text-decoration: none; }
+      button, a { -webkit-tap-highlight-color: transparent; }
+      button:focus-visible, a:focus-visible {
+        outline: 2px solid var(--cyan);
+        outline-offset: 4px;
+      }
+
+      /* ── Shell & Stage ── */
+      .shell {
+        width: 100%;
+        min-height: 100dvh;
+        padding: 0;
+        display: flex;
+      }
+
+      .stage {
+        width: 100%;
+        height: 100dvh;
+        overflow: hidden;
+        position: relative;
+        border: none;
+        background:
+          linear-gradient(90deg, rgba(3, 5, 9, 0.94) 0%, rgba(3, 5, 9, 0.72) 46%, rgba(3, 5, 9, 0.42) 100%),
+          linear-gradient(135deg, rgba(0, 215, 255, 0.2), rgba(255, 61, 242, 0.12) 46%, transparent 72%),
+          url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1800&q=80") center / cover;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(122, 145, 158, 0.44) transparent;
+      }
+
+      .stage::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        opacity: 0.22;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+        background-size: 72px 72px;
+        mask-image: linear-gradient(90deg, #000 0%, transparent 78%);
+      }
+
+      .stage::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(circle at 80% 72%, rgba(0, 215, 255, 0.2), transparent 28%);
+        mix-blend-mode: screen;
+        opacity: 0.76;
+      }
+
+      /* ── Topbar ── */
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 22px 30px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(8px);
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        flex-wrap: wrap;
+      }
+
+      .nav button, .ghost-button {
+        min-height: 44px;
+        border: 0;
+        color: var(--text);
+        background: transparent;
+        cursor: pointer;
+        font: inherit;
+      }
+
+      .nav button {
+        padding: 0;
+        font-size: 12px;
+        color: #d9e1e8;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        transition: color 160ms ease;
+      }
+
+      .nav button:hover, .ghost-button:hover { color: var(--cyan); }
+      .nav button.active { color: var(--cyan); }
+
+      .contact-mini {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #d7dee5;
+        font-size: 12px;
+        white-space: nowrap;
+      }
+
+      .phone-mark {
+        width: 10px;
+        height: 15px;
+        border: 1px solid currentColor;
+        border-radius: 2px;
+        display: inline-block;
+        position: relative;
+      }
+
+      .phone-mark::after {
+        content: "";
+        width: 3px;
+        height: 1px;
+        background: currentColor;
+        position: absolute;
+        left: 50%;
+        bottom: 2px;
+        transform: translateX(-50%);
+      }
+
+      /* ── Views ── */
+      .view {
+        display: none;
+        position: relative;
+        z-index: 2;
+        min-height: calc(100dvh - 136px);
+        padding: 48px 92px 62px;
+      }
+
+      .view.active {
+        display: grid;
+        animation: viewIn 240ms ease-out;
+      }
+
+      @keyframes viewIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      /* ── Home ── */
+      .home-view {
+        grid-template-columns: minmax(0, 1fr);
+        align-items: start;
+        gap: 56px;
+        padding-bottom: 80px;
+      }
+
+      .home-view > .hero-block { max-width: 800px; }
+
+      .eyebrow {
+        margin: 0 0 18px;
+        color: var(--acid);
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+      }
+
+      h1, h2, h3, p { margin-top: 0; }
+
+      .hero-title {
+        margin-bottom: 14px;
+        font-size: clamp(42px, 6.4vw, 84px);
+        line-height: 0.95;
+        font-weight: 900;
+        text-transform: uppercase;
+        text-wrap: balance;
+      }
+
+      .hero-title span {
+        display: inline-block;
+        background: linear-gradient(90deg, #ffffff 0%, #dce9f1 46%, rgba(0, 215, 255, 0.78) 100%);
+        -webkit-background-clip: text;
+        color: transparent;
+      }
+
+      .hero-role {
+        margin-bottom: 18px;
+        color: #dfe7ee;
+        font-size: clamp(16px, 1.8vw, 22px);
+        letter-spacing: 0.22em;
+      }
+
+      /* Info tags */
+      .info-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 28px;
+      }
+
+      .tag {
+        padding: 4px 12px;
+        border: 1px solid rgba(0, 215, 255, 0.3);
+        border-radius: 999px;
+        color: var(--muted);
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        background: rgba(0, 215, 255, 0.05);
+      }
+
+      .hero-copy {
+        max-width: 520px;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.8;
+        margin-bottom: 0;
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-top: 30px;
+      }
+
+      .pill {
+        min-height: 44px;
+        min-width: 132px;
+        padding: 0 22px;
+        border: 1px solid rgba(255, 255, 255, 0.76);
+        border-radius: 999px;
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.03);
+        cursor: pointer;
+        font: inherit;
+        transition: 180ms ease;
+      }
+
+      .pill.primary {
+        border-color: var(--cyan);
+        color: #e9fbff;
+        background: linear-gradient(90deg, rgba(0, 215, 255, 0.18), rgba(255, 61, 242, 0.12));
+      }
+
+      .pill:hover {
+        transform: translateY(-2px);
+        border-color: var(--cyan);
+      }
+
+      /* Ability strip */
+      .ability-strip {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(255, 255, 255, 0.12);
+        transform: skew(-4deg);
+        max-width: 680px;
+      }
+
+      .ability-item {
+        padding: 22px;
+        background: rgba(4, 8, 12, 0.7);
+        backdrop-filter: blur(10px);
+      }
+
+      .ability-item > * {
+        display: block;
+        transform: skew(4deg);
+      }
+
+      .ability-item strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 22px;
+      }
+
+      .ability-item span {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      /* ── Section shared ── */
+      .section-title {
+        display: inline-block;
+        margin-bottom: 6px;
+        border-bottom: 2px solid var(--magenta);
+        font-size: clamp(28px, 4vw, 44px);
+        line-height: 1;
+        font-weight: 900;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 28px;
+      }
+
+      .section-head p {
+        max-width: 560px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      /* ── Filters ── */
+      .filters {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 28px;
+      }
+
+      .filter {
+        min-height: 38px;
+        padding: 0 16px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        cursor: pointer;
+        font: inherit;
+        transition: border-color 160ms ease, background 160ms ease, color 160ms ease, transform 160ms ease;
+      }
+
+      .filter:hover {
+        color: var(--text);
+        border-color: rgba(154, 174, 185, 0.52);
+        background: rgba(255, 255, 255, 0.07);
+        transform: translateY(-1px);
+      }
+
+      .filter.active {
+        color: var(--text);
+        border-color: var(--cyan);
+        background: rgba(20, 184, 212, 0.14);
+      }
+
+      /* ── Portfolio cards ── */
+      .portfolio-view, .blog-view, .resources-view {
+        align-content: start;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+
+      .card {
+        position: relative;
+        min-height: 240px;
+        padding: 22px;
+        border: 0;
+        background:
+          linear-gradient(135deg, rgba(0, 215, 255, 0.08), transparent 36%),
+          var(--panel);
+        cursor: pointer;
+        transition: 180ms ease;
+        clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%);
+        text-align: left;
+        font: inherit;
+        color: var(--text);
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        padding: 1px;
+        pointer-events: none;
+        background: rgba(255, 255, 255, 0.16);
+        clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%);
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        transition: background 180ms ease;
+      }
+
+      .card:hover {
+        transform: translateY(-4px);
+        background:
+          linear-gradient(135deg, rgba(0, 215, 255, 0.14), rgba(255, 61, 242, 0.06) 46%, transparent 72%),
+          var(--panel-strong);
+      }
+
+      .card:hover::before {
+        background: linear-gradient(135deg, rgba(0, 215, 255, 0.62), rgba(255, 61, 242, 0.38));
+      }
+
+      .card > * { position: relative; z-index: 2; }
+
+      .card small {
+        display: block;
+        margin-bottom: 42px;
+        color: var(--acid);
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .card h3 {
+        min-height: 56px;
+        margin-bottom: 14px;
+        font-size: 22px;
+        line-height: 1.25;
+      }
+
+      .card p { color: var(--muted); font-size: 14px; line-height: 1.65; }
+
+      .tagline { margin-top: 16px; color: var(--warm); font-size: 13px; }
+
+      /* ── Blog & Resource list ── */
+      .blog-list, .resource-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+
+      .row-card {
+        padding: 22px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background:
+          linear-gradient(120deg, rgba(255, 61, 242, 0.08), transparent 40%),
+          rgba(7, 11, 15, 0.76);
+        backdrop-filter: blur(8px);
+        cursor: pointer;
+        transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+      }
+
+      .row-card:hover {
+        transform: translateY(-3px);
+        border-color: rgba(154, 174, 185, 0.48);
+        background:
+          linear-gradient(120deg, rgba(0, 215, 255, 0.1), rgba(255, 61, 242, 0.08) 48%, transparent 76%),
+          rgba(10, 15, 24, 0.88);
+        box-shadow: 0 16px 42px rgba(0, 0, 0, 0.22);
+      }
+
+      .card:focus-visible, .row-card:focus-visible {
+        outline: 2px solid rgba(0, 215, 255, 0.76);
+        outline-offset: 4px;
+      }
+
+      .row-card h3 { margin-bottom: 10px; font-size: 20px; }
+      .row-card p { color: var(--muted); line-height: 1.65; }
+
+      /* ── Drawer ── */
+      .drawer {
+        position: fixed;
+        inset: 0;
+        z-index: 20;
+        display: none;
+        background: rgba(0, 0, 0, 0.62);
+      }
+
+      .drawer.open {
+        display: grid;
+        place-items: center;
+        animation: fadeIn 180ms ease-out;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+      }
+
+      .drawer-panel {
+        width: min(620px, calc(100% - 40px));
+        padding: 34px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: #0d141b;
+        animation: slideUp 220ms ease-out;
+      }
+
+      @keyframes slideUp {
+        from { transform: translateY(16px); opacity: 0.6; }
+        to   { transform: translateY(0);   opacity: 1; }
+      }
+
+      .drawer-panel h2 { margin-bottom: 14px; font-size: 28px; }
+      .drawer-panel p  { color: var(--muted); line-height: 1.7; }
+
+      .close-row {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 28px;
+      }
+
+      /* ── City label ── */
+      .city-label {
+        position: absolute;
+        right: 30px;
+        top: 104px;
+        z-index: 3;
+        writing-mode: vertical-rl;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 12px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+
+      /* ── Responsive ── */
+      @media (max-width: 900px) {
+        .shell { padding: 0; }
+        .stage { height: 100dvh; }
+        .topbar { align-items: flex-start; padding: 18px; }
+        .nav { gap: 16px; }
+
+        .view {
+          min-height: calc(100dvh - 112px);
+          padding: 34px 24px 72px;
+        }
+
+        .cards,
+        .blog-list,
+        .resource-list,
+        .ability-strip {
+          grid-template-columns: 1fr;
+        }
+
+        .ability-strip { transform: none; }
+        .ability-item > * { transform: none; }
+
+        .hero-title { white-space: normal; }
+
+        .section-head { display: block; }
+        .city-label { display: none; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          scroll-behavior: auto !important;
+          animation-duration: 1ms !important;
+          transition-duration: 1ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="stage" aria-label="个人门户">
+
+        <header class="topbar">
+          <nav class="nav" aria-label="主导航">
+            <button class="active" data-view="home">首页</button>
+            <button data-view="portfolio">作品</button>
+            <button data-view="blog">文章</button>
+            <button data-view="resources">工具箱</button>
+          </nav>
+          <button class="ghost-button contact-mini" id="openContact">
+            <span class="phone-mark" aria-hidden="true"></span>
+            联系我
+          </button>
+        </header>
+
+        <!-- 首页（含关于 + 基础信息标签） -->
+        <section class="view home-view active" data-panel="home">
+          <div class="hero-block">
+            <p class="eyebrow">Wuhan</p>
+            <h1 class="hero-title"><span>产品设计与 AI 原型实践</span></h1>
+            <p class="hero-role">从 UI/UX 到产品方案落地</p>
+            <div class="info-tags" aria-label="基本信息">
+              <span class="tag">产品设计</span>
+              <span class="tag">产品管理</span>
+              <span class="tag">UI/UX 转产品</span>
+              <span class="tag">AI 工作流</span>
+              <span class="tag">武汉 / 远程协作</span>
+            </div>
+            <p class="hero-copy">
+              我关注从用户体验、业务目标到落地协作的完整链路，擅长把复杂需求转化为清晰的产品方案、交互原型和可执行文档。
+            </p>
+            <div class="actions">
+              <button class="pill primary" data-view="portfolio">查看作品</button>
+              <button class="pill" data-view="blog">阅读文章</button>
+              <button class="pill" id="openContactCta">联系我</button>
+            </div>
+          </div>
+
+          <div class="ability-strip" aria-label="能力摘要">
+            <div class="ability-item">
+              <strong>UI/UX</strong>
+              <span>设计系统、交互、体验评审</span>
+            </div>
+            <div class="ability-item">
+              <strong>PM</strong>
+              <span>需求拆解、流程、排期推进</span>
+            </div>
+            <div class="ability-item">
+              <strong>AI</strong>
+              <span>原型提效、知识整理、工具链</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 作品 -->
+        <section class="view portfolio-view" data-panel="portfolio">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">作品</h2>
+              <p>展示可公开的项目摘要和方法沉淀，重点呈现问题定义、产品判断、协作过程和结果意识。</p>
+            </div>
+          </div>
+          <div class="filters" aria-label="案例筛选">
+            <button class="filter active" data-filter="all">全部</button>
+            <button class="filter" data-filter="product">产品项目</button>
+            <button class="filter" data-filter="design">设计作品</button>
+            <button class="filter" data-filter="method">方法论</button>
+          </div>
+          <div class="cards" id="caseCards"></div>
+        </section>
+
+        <!-- 文章 -->
+        <section class="view blog-view" data-panel="blog">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">文章</h2>
+              <p>沉淀产品转型、设计复盘、AI 工作流和知识管理，作为公开展示专业思考的内容入口。</p>
+            </div>
+          </div>
+          <div class="blog-list" id="blogList"></div>
+        </section>
+
+        <!-- 工具箱 -->
+        <section class="view resources-view" data-panel="resources">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">工具箱</h2>
+              <p>公开展示常用工具和工作方式，帮助访客理解我的设计、产品、AI 与研发协作习惯。</p>
+            </div>
+          </div>
+          <div class="filters" aria-label="资源分类">
+            <button class="filter active" data-resource="design">设计</button>
+            <button class="filter" data-resource="product">产品</button>
+            <button class="filter" data-resource="ai">AI</button>
+            <button class="filter" data-resource="dev">研发</button>
+          </div>
+          <div class="resource-list" id="resourceList"></div>
+        </section>
+
+        <div class="city-label">武汉 · 江城 · 面向未来</div>
+      </section>
+    </main>
+
+    <!-- 详情抽屉 -->
+    <div class="drawer" id="detailDrawer" aria-hidden="true">
+      <div class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+        <h2 id="drawerTitle"></h2>
+        <p id="drawerBody"></p>
+        <div id="drawerExtra"></div>
+        <div class="close-row">
+          <button class="pill primary" id="closeDrawer">关闭</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      /* ── 数据 ── */
+      const cases = [
+        { type: "product", label: "产品项目", title: "AI 助教学习路径优化",
+          desc: "从学生学习断点出发，拆解推荐逻辑、任务路径和反馈机制。",
+          result: "目标：提升学习路径完成率与错题回访率。",
+          detail: "项目背景：在线教育平台的学生在遇到难题后流失率较高。我的角色：负责需求拆解、流程设计、原型输出及验收标准制定。问题定义：推荐内容与当前学情脱节，缺乏有效反馈闭环。关键方案：引入学情快照机制，重新设计学习路径卡片和错题复访提醒。" },
+        { type: "design", label: "设计作品", title: "B 端数据仪表盘体验重构",
+          desc: "重新组织指标层级、筛选路径和图表密度，降低管理者阅读成本。",
+          result: "目标：让关键指标在首屏可判断、可追踪。",
+          detail: "项目背景：SaaS 后台报表页面信息密度过高，管理者难以快速获取关键指标。我的角色：UX 设计师，负责调研、方案设计和设计走查。关键方案：将图表分层为「决策层 / 分析层 / 明细层」，精简首屏至 3 个核心指标。" },
+        { type: "method", label: "方法论", title: "从设计稿到 PRD 的转译框架",
+          desc: "把视觉方案拆解为目标、规则、边界、状态和验收标准。",
+          result: "目标：提高设计与开发、测试之间的信息一致性。",
+          detail: "背景：设计稿移交开发后频繁出现「还原度不足」争议，根因是边界条件和异常态未被表达。框架内容：将任何设计方案拆解为 5 个维度——目标说明、正常流规则、异常流规则、边界条件、验收标准。" },
+        { type: "product", label: "产品项目", title: "工具箱与知识入口",
+          desc: "围绕个人高频工作流整理工具、资料、模板和案例入口。",
+          result: "目标：减少重复查找成本，形成可维护的门户资产。",
+          detail: "背景：工作中频繁在不同工具间切换，查找资料消耗大量时间。方案：建立分类工具箱，按设计/产品/AI/研发四个维度组织工具入口，支持快速跳转。" },
+        { type: "design", label: "设计作品", title: "个人品牌深色视觉系统",
+          desc: "参考摄影感深色个人站，建立高对比、低干扰的展示风格。",
+          result: "目标：突出专业感和个人识别度。",
+          detail: "背景：希望建立一套在视觉上区分于普通简历的个人品牌。方案：使用深底色 + 电光蓝/品红双色体系，配合半透明面板和噪点纹理营造科技感，同时保证可读性。" },
+        { type: "method", label: "方法论", title: "产品复盘模板",
+          desc: "统一记录背景、假设、指标、动作、结果和后续策略。",
+          result: "目标：让每个项目沉淀为可复用经验。",
+          detail: "背景：项目结束后经验难以沉淀，下次遇到类似问题仍从零开始。模板结构：项目背景 → 初始假设 → 目标指标 → 关键动作 → 实际结果 → 偏差分析 → 后续策略。" }
+      ];
+
+      const blogPosts = [
+        { title: "从设计评审到产品决策", summary: "记录一次从界面问题反推业务目标、数据指标和协作机制的过程。", tag: "产品方法", readTime: "8 分钟阅读",
+          detail: "起点是一次例行设计评审，开发质疑按钮位置的合理性。而深入讨论后我们发现，真正的问题是业务目标不清晰——这篇文章记录了如何从一个界面细节反推到指标定义和协作规则。" },
+        { title: "如何整理一个可复用的作品模板", summary: "把作品从「看图」升级为「看判断」，让项目表达更适合产品岗位和合作沟通。", tag: "作品表达", readTime: "6 分钟阅读",
+          detail: "产品岗位作品表达与设计岗位的核心差异在于：前者需要展示判断力，而不只是视觉执行力。本文介绍如何用「背景→问题→方案→结果」四段式结构重新组织每个案例。" },
+        { title: "AI 辅助 PRD 的边界", summary: "哪些环节适合交给 AI，哪些判断必须由产品负责人自己完成。", tag: "AI 工作流", readTime: "10 分钟阅读",
+          detail: "AI 可以很好地完成：结构化整理、场景穷举、文案润色、竞品调研摘要。但这些判断必须由人来做：优先级取舍、利益相关方博弈、用户真实动机识别。" },
+        { title: "B 端页面的信息密度", summary: "在效率、可读性和业务复杂度之间找到稳定的设计尺度。", tag: "B 端体验", readTime: "7 分钟阅读",
+          detail: "B 端页面信息密度过低会让用户频繁翻页，过高则造成认知负担。本文提出用「决策频率」和「数据关系复杂度」两个维度来评估页面应该呈现多少信息。" }
+      ];
+
+      const resources = {
+        design: [
+          { name: "Figma", desc: "设计协作、原型和组件库", url: "https://figma.com" },
+          { name: "Mobbin", desc: "移动端产品界面参考", url: "https://mobbin.com" },
+          { name: "Dribbble", desc: "视觉灵感和作品发布", url: "https://dribbble.com" },
+          { name: "IconFont", desc: "中文图标资源库", url: "https://www.iconfont.cn" }
+        ],
+        product: [
+          { name: "Notion", desc: "需求、知识库和项目整理", url: "https://notion.so" },
+          { name: "Linear", desc: "任务流转和缺陷跟踪", url: "https://linear.app" },
+          { name: "Google Analytics", desc: "基础访问与转化分析", url: "https://analytics.google.com" },
+          { name: "飞书文档", desc: "团队协作和 PRD 维护", url: "https://feishu.cn" }
+        ],
+        ai: [
+          { name: "ChatGPT", desc: "需求分析、原型思考和文本整理", url: "https://chat.openai.com" },
+          { name: "Perplexity", desc: "资料检索和竞品研究", url: "https://perplexity.ai" },
+          { name: "Midjourney", desc: "视觉概念探索", url: "https://midjourney.com" },
+          { name: "Cursor", desc: "代码辅助和原型开发", url: "https://cursor.sh" }
+        ],
+        dev: [
+          { name: "GitHub", desc: "代码仓库与发布流程", url: "https://github.com" },
+          { name: "Vercel", desc: "前端部署与预览", url: "https://vercel.com" },
+          { name: "MDN", desc: "Web 标准查询", url: "https://developer.mozilla.org" },
+          { name: "Tailwind CSS", desc: "界面样式快速构建", url: "https://tailwindcss.com" }
+        ]
+      };
+
+      /* ── 视图切换 ── */
+      const panels = document.querySelectorAll("[data-panel]");
+      const navButtons = document.querySelectorAll(".nav [data-view]");
+
+      function showView(name) {
+        panels.forEach(p => p.classList.toggle("active", p.dataset.panel === name));
+        navButtons.forEach(b => b.classList.toggle("active", b.dataset.view === name));
+      }
+
+      document.querySelectorAll("[data-view]").forEach(btn => {
+        btn.addEventListener("click", () => showView(btn.dataset.view));
+      });
+
+      /* ── 抽屉 ── */
+      const detailDrawer = document.getElementById("detailDrawer");
+      const drawerTitle = document.getElementById("drawerTitle");
+      const drawerBody = document.getElementById("drawerBody");
+      const drawerExtra = document.getElementById("drawerExtra");
+      const closeDrawerBtn = document.getElementById("closeDrawer");
+      let lastFocused = null;
+
+      function openDrawer({ title, body, extra = "" }) {
+        lastFocused = document.activeElement;
+        drawerTitle.textContent = title;
+        drawerBody.textContent = body;
+        drawerExtra.innerHTML = extra;
+        detailDrawer.classList.add("open");
+        detailDrawer.setAttribute("aria-hidden", "false");
+        closeDrawerBtn.focus();
+      }
+
+      function closeDrawer() {
+        detailDrawer.classList.remove("open");
+        detailDrawer.setAttribute("aria-hidden", "true");
+        if (lastFocused) lastFocused.focus();
+      }
+
+      closeDrawerBtn.addEventListener("click", closeDrawer);
+      detailDrawer.addEventListener("click", e => { if (e.target === detailDrawer) closeDrawer(); });
+      document.addEventListener("keydown", e => { if (e.key === "Escape") closeDrawer(); });
+
+      /* ── 作品 ── */
+      const caseCards = document.getElementById("caseCards");
+
+      function renderCases(type = "all") {
+        caseCards.innerHTML = "";
+        cases.filter(c => type === "all" || c.type === type).forEach(item => {
+          const card = document.createElement("button");
+          card.className = "card";
+          card.innerHTML = `<small>${item.label}</small><h3>${item.title}</h3><p>${item.desc}</p><div class="tagline">${item.result}</div>`;
+          card.addEventListener("click", () => openDrawer({
+            title: item.title,
+            body: item.detail,
+            extra: `<p style="margin-top:14px;color:var(--warm);font-size:13px;">${item.result}</p>`
+          }));
+          caseCards.appendChild(card);
+        });
+      }
+
+      document.querySelectorAll("[data-filter]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll("[data-filter]").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          renderCases(btn.dataset.filter);
+        });
+      });
+
+      /* ── 文章 ── */
+      const blogList = document.getElementById("blogList");
+
+      function renderBlog() {
+        blogList.innerHTML = "";
+        blogPosts.forEach(post => {
+          const card = document.createElement("article");
+          card.className = "row-card";
+          card.tabIndex = 0;
+          card.innerHTML = `<h3>${post.title}</h3><p>${post.summary}</p><div class="tagline">${post.tag} · ${post.readTime}</div>`;
+          const openPost = () => openDrawer({
+            title: post.title,
+            body: post.detail,
+            extra: `<p style="margin-top:14px;color:var(--faint);font-size:12px;">${post.tag} · ${post.readTime}</p>`
+          });
+          card.addEventListener("click", openPost);
+          card.addEventListener("keydown", e => { if (e.key === "Enter") openPost(); });
+          blogList.appendChild(card);
+        });
+      }
+
+      /* ── 工具箱 ── */
+      const resourceList = document.getElementById("resourceList");
+
+      function renderResources(type = "design") {
+        resourceList.innerHTML = "";
+        resources[type].forEach(({ name, desc, url }) => {
+          const card = document.createElement("a");
+          card.className = "row-card";
+          card.href = url;
+          card.target = "_blank";
+          card.rel = "noopener noreferrer";
+          card.innerHTML = `<h3>${name}</h3><p>${desc}</p><div class="tagline">↗ 打开工具</div>`;
+          resourceList.appendChild(card);
+        });
+      }
+
+      document.querySelectorAll("[data-resource]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll("[data-resource]").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          renderResources(btn.dataset.resource);
+        });
+      });
+
+      /* ── 联系 ── */
+      const contactDrawerContent = {
+        title: "联系我",
+        body: "欢迎通过邮件或以下平台发起联系，适合交流面试、产品设计、AI 原型和合作机会。",
+        extra: `
+          <div style="display:grid;gap:10px;margin-top:18px;">
+            <a href="mailto:hello@yourdomain.com" style="color:var(--cyan);font-size:15px;">✉ hello@yourdomain.com</a>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" style="color:var(--muted);font-size:14px;">GitHub →</a>
+          </div>`
+      };
+
+      document.getElementById("openContact").addEventListener("click", () => openDrawer(contactDrawerContent));
+      document.getElementById("openContactCta").addEventListener("click", () => openDrawer(contactDrawerContent));
+
+      /* ── 初始化 ── */
+      renderCases();
+      renderBlog();
+      renderResources();
+    </script>
+  </body>
+</html>
