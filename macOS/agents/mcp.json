@@ -10,7 +10,7 @@
       "url": "https://mcp.notion.com/mcp"
     },
     "pencil": {
-      "command": "/Users/xiaolin/.pencil/mcp/visual_studio_code/out/mcp-server-darwin-arm64",
+      "command": "/Users/<YOUR_MAC_USER>/.pencil/mcp/visual_studio_code/out/mcp-server-darwin-arm64",
       "args": [
         "--app",
         "visual_studio_code"
