@@ -44,6 +44,7 @@ prototypes/
 
 ## 内容说明
 
+- `AGENTS.md`：agent 工作规约，说明产品设计前的 skill 使用流程、代码实现规则、实现后文档产出和 PRD/交互文档/功能实现文档格式。
 - `macOS/agents/`：macOS 版项目级 agent 配置与 `.agents/skills` 下当前使用的协作、设计审查、设计 token 实现、PRD 写作相关 skill。
 - `macOS/skills/`：macOS 版项目根目录 `skills` 下的通用 skill。
 - `Windows/agents/`：Windows 版项目级 agent 配置与 agent skills，MCP 本机命令路径已改为 Windows 占位路径。
