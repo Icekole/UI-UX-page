@@ -29,10 +29,7 @@
         min-height: 100vh;
         color: var(--text);
         background:
-          radial-gradient(circle at 16% 16%, rgba(0, 215, 255, 0.16), transparent 30%),
-          radial-gradient(circle at 76% 18%, rgba(255, 61, 242, 0.12), transparent 28%),
-          radial-gradient(circle at 82% 76%, rgba(202, 255, 61, 0.08), transparent 26%),
-          linear-gradient(135deg, #05060a 0%, #111827 58%, #3a424a 100%);
+          linear-gradient(135deg, #05060a 0%, #10151e 46%, #252c32 100%);
         font-family: Inter, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
         overflow: hidden;
       }
@@ -59,9 +56,9 @@
         position: relative;
         border: none;
         background:
-          linear-gradient(90deg, rgba(3, 5, 9, 0.94) 0%, rgba(3, 5, 9, 0.72) 46%, rgba(3, 5, 9, 0.42) 100%),
-          linear-gradient(135deg, rgba(0, 215, 255, 0.2), rgba(255, 61, 242, 0.12) 46%, transparent 72%),
-          url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1800&q=80") center / cover;
+          linear-gradient(115deg, rgba(3, 5, 9, 0.98) 0%, rgba(9, 15, 25, 0.94) 34%, rgba(28, 20, 40, 0.84) 62%, rgba(4, 29, 32, 0.92) 100%),
+          conic-gradient(from 220deg at 72% 26%, rgba(0, 215, 255, 0.28), rgba(255, 61, 242, 0.18), rgba(202, 255, 61, 0.08), rgba(0, 168, 216, 0.18), rgba(3, 5, 9, 0.24)),
+          linear-gradient(160deg, rgba(255, 255, 255, 0.04), transparent 38%, rgba(0, 215, 255, 0.08) 100%);
         overflow-y: auto;
         scrollbar-width: thin;
         scrollbar-color: rgba(122, 145, 158, 0.44) transparent;
@@ -84,12 +81,15 @@
       .stage::after {
         content: "";
         position: absolute;
-        inset: 0;
+        inset: -8%;
         pointer-events: none;
         background:
-          radial-gradient(circle at 80% 72%, rgba(0, 215, 255, 0.2), transparent 28%);
+          linear-gradient(135deg, transparent 0%, rgba(0, 215, 255, 0.16) 24%, transparent 48%),
+          linear-gradient(58deg, transparent 10%, rgba(255, 61, 242, 0.12) 42%, transparent 72%),
+          linear-gradient(170deg, rgba(202, 255, 61, 0.07), transparent 36%, rgba(0, 168, 216, 0.12));
+        filter: blur(34px);
         mix-blend-mode: screen;
-        opacity: 0.76;
+        opacity: 0.9;
       }
 
       /* ── Topbar ── */
@@ -375,20 +375,20 @@
       }
 
       /* ── Portfolio cards ── */
-      .portfolio-view, .blog-view, .resources-view {
+      .portfolio-view, .portfolio-detail-view, .blog-view, .resources-view {
         align-content: start;
       }
 
       .cards {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 18px;
       }
 
       .card {
         position: relative;
-        min-height: 240px;
-        padding: 22px;
+        min-height: 390px;
+        padding: 0;
         border: 0;
         background:
           linear-gradient(135deg, rgba(0, 215, 255, 0.08), transparent 36%),
@@ -399,6 +399,7 @@
         text-align: left;
         font: inherit;
         color: var(--text);
+        overflow: hidden;
       }
 
       .card::before {
@@ -429,9 +430,48 @@
 
       .card > * { position: relative; z-index: 2; }
 
+      .case-cover {
+        position: relative;
+        height: 174px;
+        margin: 0;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .case-cover::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background:
+          linear-gradient(180deg, transparent 52%, rgba(5, 6, 10, 0.84) 100%),
+          linear-gradient(120deg, rgba(0, 215, 255, 0.18), transparent 42%, rgba(255, 61, 242, 0.12));
+      }
+
+      .case-cover img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        opacity: 0.88;
+        filter: saturate(1.05) contrast(1.02);
+        transform: scale(1.01);
+        transition: transform 220ms ease, opacity 220ms ease, filter 220ms ease;
+      }
+
+      .card:hover .case-cover img {
+        opacity: 0.98;
+        filter: saturate(1.16) contrast(1.08);
+        transform: scale(1.06);
+      }
+
+      .case-content {
+        padding: 20px 22px 22px;
+      }
+
       .card small {
         display: block;
-        margin-bottom: 42px;
+        margin-bottom: 10px;
         color: var(--acid);
         font-weight: 700;
         letter-spacing: 0.12em;
@@ -439,7 +479,6 @@
       }
 
       .card h3 {
-        min-height: 56px;
         margin-bottom: 14px;
         font-size: 22px;
         line-height: 1.25;
@@ -447,7 +486,31 @@
 
       .card p { color: var(--muted); font-size: 14px; line-height: 1.65; }
 
-      .tagline { margin-top: 16px; color: var(--warm); font-size: 13px; }
+      .case-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      .case-meta span {
+        padding: 4px 9px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 999px;
+        color: #dce7ed;
+        background: rgba(255, 255, 255, 0.05);
+        font-size: 12px;
+        line-height: 18px;
+      }
+
+      .tagline {
+        margin-top: 16px;
+        padding-top: 14px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--warm);
+        font-size: 13px;
+        line-height: 1.6;
+      }
 
       /* ── Blog & Resource list ── */
       .blog-list, .resource-list {
@@ -496,6 +559,7 @@
       .drawer.open {
         display: grid;
         place-items: center;
+        padding: 24px;
         animation: fadeIn 180ms ease-out;
       }
 
@@ -505,11 +569,25 @@
       }
 
       .drawer-panel {
-        width: min(620px, calc(100% - 40px));
+        width: min(960px, 100%);
+        max-height: calc(100dvh - 48px);
+        overflow: auto;
         padding: 34px;
         border: 1px solid rgba(255, 255, 255, 0.18);
-        background: #0d141b;
+        background:
+          linear-gradient(135deg, rgba(0, 215, 255, 0.08), rgba(255, 61, 242, 0.05) 40%, transparent 70%),
+          #0d141b;
+        box-shadow: var(--shadow);
+        scrollbar-width: thin;
+        scrollbar-color: rgba(105, 119, 130, 0.5) transparent;
         animation: slideUp 220ms ease-out;
+      }
+
+      .drawer-panel::-webkit-scrollbar { width: 8px; }
+      .drawer-panel::-webkit-scrollbar-track { background: transparent; }
+      .drawer-panel::-webkit-scrollbar-thumb {
+        border-radius: 999px;
+        background: rgba(105, 119, 130, 0.5);
       }
 
       @keyframes slideUp {
@@ -520,23 +598,210 @@
       .drawer-panel h2 { margin-bottom: 14px; font-size: 28px; }
       .drawer-panel p  { color: var(--muted); line-height: 1.7; }
 
+      .drawer-visual {
+        margin: 22px 0;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.04);
+        overflow: hidden;
+        clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%);
+      }
+
+      .drawer-visual img {
+        display: block;
+        width: 100%;
+        max-height: 430px;
+        object-fit: cover;
+      }
+
+      .drawer-caption {
+        padding: 12px 14px;
+        color: var(--faint);
+        font-size: 12px;
+        line-height: 1.6;
+      }
+
+      .drawer-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 18px 0 4px;
+      }
+
+      .drawer-tags span {
+        padding: 5px 10px;
+        border: 1px solid rgba(0, 215, 255, 0.24);
+        border-radius: 999px;
+        color: #dff9ff;
+        background: rgba(0, 215, 255, 0.08);
+        font-size: 12px;
+        line-height: 18px;
+      }
+
+      .detail-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 18px;
+      }
+
+      .detail-section {
+        min-height: 150px;
+        padding: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .detail-section h3 {
+        margin-bottom: 12px;
+        color: var(--text);
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+      .detail-section ul {
+        margin: 0;
+        padding-left: 18px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      .metric-strip {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .metric {
+        padding: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(202, 255, 61, 0.06);
+      }
+
+      .metric strong {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--acid);
+        font-size: 18px;
+      }
+
+      .metric span {
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 18px;
+      }
+
+      /* ── Portfolio detail page ── */
+      .portfolio-detail-view {
+        gap: 24px;
+      }
+
+      .detail-backbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 8px;
+      }
+
+      .detail-backbar .pill {
+        min-width: auto;
+      }
+
+      .detail-page {
+        display: grid;
+        gap: 24px;
+      }
+
+      .detail-hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(220px, 320px);
+        gap: 28px;
+        align-items: end;
+        padding-bottom: 24px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .detail-kicker {
+        display: block;
+        margin-bottom: 14px;
+        color: var(--acid);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .detail-title {
+        margin-bottom: 16px;
+        font-size: clamp(34px, 5vw, 62px);
+        line-height: 1;
+        font-weight: 900;
+      }
+
+      .detail-summary {
+        max-width: 760px;
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.8;
+      }
+
+      .detail-side {
+        padding: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.04);
+        clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
+      }
+
+      .detail-side strong {
+        display: block;
+        margin-bottom: 10px;
+        color: var(--text);
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+      .detail-side p {
+        margin-bottom: 0;
+        color: var(--warm);
+        font-size: 13px;
+        line-height: 1.7;
+      }
+
+      .portfolio-detail-view .drawer-tags {
+        margin-top: 0;
+      }
+
+      .portfolio-detail-view .drawer-visual {
+        margin: 18px 0 0;
+      }
+
+      .portfolio-detail-view .drawer-visual img {
+        max-height: 560px;
+      }
+
+      .contact-links {
+        display: grid;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .contact-links a {
+        color: var(--cyan);
+        font-size: 15px;
+      }
+
+      .contact-links a + a {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
       .close-row {
         display: flex;
         justify-content: flex-end;
         margin-top: 28px;
-      }
-
-      /* ── City label ── */
-      .city-label {
-        position: absolute;
-        right: 30px;
-        top: 104px;
-        z-index: 3;
-        writing-mode: vertical-rl;
-        color: rgba(255, 255, 255, 0.7);
-        font-size: 12px;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
       }
 
       /* ── Responsive ── */
@@ -558,13 +823,22 @@
           grid-template-columns: 1fr;
         }
 
+        .case-cover { height: 190px; }
+        .detail-hero {
+          grid-template-columns: 1fr;
+        }
+
+        .detail-grid,
+        .metric-strip {
+          grid-template-columns: 1fr;
+        }
+
         .ability-strip { transform: none; }
         .ability-item > * { transform: none; }
 
         .hero-title { white-space: normal; }
 
         .section-head { display: block; }
-        .city-label { display: none; }
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -637,7 +911,7 @@
           <div class="section-head">
             <div>
               <h2 class="section-title">作品</h2>
-              <p>展示可公开的项目摘要和方法沉淀，重点呈现问题定义、产品判断、协作过程和结果意识。</p>
+              <p>基于 2023 UI/UX 作品集重新整理公开案例，用图文方式呈现问题定义、设计判断、产品转译和结果沉淀。</p>
             </div>
           </div>
           <div class="filters" aria-label="案例筛选">
@@ -647,6 +921,28 @@
             <button class="filter" data-filter="method">方法论</button>
           </div>
           <div class="cards" id="caseCards"></div>
+        </section>
+
+        <!-- 作品详情二级页面 -->
+        <section class="view portfolio-detail-view" data-panel="portfolio-detail" aria-live="polite">
+          <div class="detail-backbar">
+            <button class="pill" id="backToPortfolio">返回作品</button>
+            <span class="tag" id="caseDetailType">作品详情</span>
+          </div>
+          <article class="detail-page" id="caseDetailPage">
+            <div class="detail-hero">
+              <div>
+                <small class="detail-kicker" id="caseDetailLabel"></small>
+                <h2 class="detail-title" id="caseDetailTitle"></h2>
+                <p class="detail-summary" id="caseDetailBody"></p>
+              </div>
+              <aside class="detail-side">
+                <strong>项目结果</strong>
+                <p id="caseDetailResult"></p>
+              </aside>
+            </div>
+            <div id="caseDetailContent"></div>
+          </article>
         </section>
 
         <!-- 文章 -->
@@ -677,11 +973,10 @@
           <div class="resource-list" id="resourceList"></div>
         </section>
 
-        <div class="city-label">武汉 · 江城 · 面向未来</div>
       </section>
     </main>
 
-    <!-- 详情抽屉 -->
+    <!-- 文章与联系抽屉 -->
     <div class="drawer" id="detailDrawer" aria-hidden="true">
       <div class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
         <h2 id="drawerTitle"></h2>
@@ -695,31 +990,162 @@
 
     <script>
       /* ── 数据 ── */
+      const caseAssets = {
+        portalMoodboard: "assets/portfolio/portal-moodboard.png",
+        portalProcess: "assets/portfolio/portal-process.png",
+        portalFramework: "assets/portfolio/portal-framework.png",
+        portalProblem: "assets/portfolio/portal-problem.png",
+        wuhanSakura: "assets/portfolio/wuhan-sakura.png",
+        admissionDashboard: "assets/portfolio/admission-dashboard.png"
+      };
+
       const cases = [
-        { type: "product", label: "产品项目", title: "AI 助教学习路径优化",
-          desc: "从学生学习断点出发，拆解推荐逻辑、任务路径和反馈机制。",
-          result: "目标：提升学习路径完成率与错题回访率。",
-          detail: "项目背景：在线教育平台的学生在遇到难题后流失率较高。我的角色：负责需求拆解、流程设计、原型输出及验收标准制定。问题定义：推荐内容与当前学情脱节，缺乏有效反馈闭环。关键方案：引入学情快照机制，重新设计学习路径卡片和错题复访提醒。" },
-        { type: "design", label: "设计作品", title: "B 端数据仪表盘体验重构",
-          desc: "重新组织指标层级、筛选路径和图表密度，降低管理者阅读成本。",
-          result: "目标：让关键指标在首屏可判断、可追踪。",
-          detail: "项目背景：SaaS 后台报表页面信息密度过高，管理者难以快速获取关键指标。我的角色：UX 设计师，负责调研、方案设计和设计走查。关键方案：将图表分层为「决策层 / 分析层 / 明细层」，精简首屏至 3 个核心指标。" },
-        { type: "method", label: "方法论", title: "从设计稿到 PRD 的转译框架",
-          desc: "把视觉方案拆解为目标、规则、边界、状态和验收标准。",
-          result: "目标：提高设计与开发、测试之间的信息一致性。",
-          detail: "背景：设计稿移交开发后频繁出现「还原度不足」争议，根因是边界条件和异常态未被表达。框架内容：将任何设计方案拆解为 5 个维度——目标说明、正常流规则、异常流规则、边界条件、验收标准。" },
-        { type: "product", label: "产品项目", title: "工具箱与知识入口",
-          desc: "围绕个人高频工作流整理工具、资料、模板和案例入口。",
-          result: "目标：减少重复查找成本，形成可维护的门户资产。",
-          detail: "背景：工作中频繁在不同工具间切换，查找资料消耗大量时间。方案：建立分类工具箱，按设计/产品/AI/研发四个维度组织工具入口，支持快速跳转。" },
-        { type: "design", label: "设计作品", title: "个人品牌深色视觉系统",
-          desc: "参考摄影感深色个人站，建立高对比、低干扰的展示风格。",
-          result: "目标：突出专业感和个人识别度。",
-          detail: "背景：希望建立一套在视觉上区分于普通简历的个人品牌。方案：使用深底色 + 电光蓝/品红双色体系，配合半透明面板和噪点纹理营造科技感，同时保证可读性。" },
-        { type: "method", label: "方法论", title: "产品复盘模板",
-          desc: "统一记录背景、假设、指标、动作、结果和后续策略。",
-          result: "目标：让每个项目沉淀为可复用经验。",
-          detail: "背景：项目结束后经验难以沉淀，下次遇到类似问题仍从零开始。模板结构：项目背景 → 初始假设 → 目标指标 → 关键动作 → 实际结果 → 偏差分析 → 后续策略。" }
+        {
+          type: "product",
+          label: "产品项目",
+          title: "高校一站式服务大厅",
+          cover: caseAssets.portalMoodboard,
+          desc: "围绕高校师生高频服务入口，重组首页、应用、办事与消息任务中心的门户体验。",
+          result: "输出：将“高效 / 便捷 / 轻松 / 舒适”转化为门户信息架构与首屏策略。",
+          tags: ["融合门户", "高校服务", "信息架构"],
+          detail: "该案例来自 2023 作品集中的一站式服务大厅方向，重点展示如何把复杂校园服务转化为可导航、可执行、可运营的门户入口。",
+          images: [
+            { src: caseAssets.portalMoodboard, caption: "情绪板明确服务大厅的体验关键词，强调简洁直观、易导航和低理解成本。" }
+          ],
+          metrics: [
+            { value: "4 类", label: "首页核心入口" },
+            { value: "3 层", label: "服务信息层级" },
+            { value: "2 端", label: "教师与学生共用入口" }
+          ],
+          sections: [
+            { title: "项目背景", items: ["高校服务资源分散，师生需要在多个入口之间切换。", "管理服务面临规模扩大后的触达、办事和消息同步压力。"] },
+            { title: "我的工作", items: ["梳理门户首页的信息优先级，区分常用、收藏、最近使用和消息任务。", "将体验目标沉淀为页面结构、导航策略和服务入口分组。"] },
+            { title: "关键设计", items: ["用高频入口降低查找成本，用办事大厅承接跨部门服务。", "通过统一视觉和服务卡片规范，减少师生理解成本。"] },
+            { title: "结果沉淀", items: ["形成可复用的高校融合门户表达方式。", "为后续 PRD 与交互文档提供服务分层依据。"] }
+          ]
+        },
+        {
+          type: "method",
+          label: "方法论",
+          title: "业务流程与功能架构",
+          cover: caseAssets.portalProcess,
+          desc: "把设计前、设计中、设计后的工作拆成可执行流程，并落到融合门户功能架构。",
+          result: "输出：从需求分析、体验目标到功能树的完整转译链路。",
+          tags: ["设计流程", "功能架构", "产品转译"],
+          detail: "该案例用于展示从设计稿到产品文档的结构化能力：先定义设计阶段与协作动作，再把动作落入功能树、页面入口和关键模块。",
+          images: [
+            { src: caseAssets.portalProcess, caption: "业务流程分为设计前、设计中、设计后三个阶段，覆盖分析、定义、输出。" },
+            { src: caseAssets.portalFramework, caption: "功能架构将 APP、融合门户、樱花预约、毕业生统计等模块统一到一张功能树中。" }
+          ],
+          metrics: [
+            { value: "3 阶段", label: "设计流程拆解" },
+            { value: "4 模块", label: "核心业务模块" },
+            { value: "1 张", label: "统一功能架构图" }
+          ],
+          sections: [
+            { title: "设计前", items: ["做产品分析、提炼用户需求、明确体验痛点。", "搭建功能框架，先确认用户人群和产品功能。"] },
+            { title: "设计中", items: ["确认设计目标，制定设计准则和页面风格。", "整理设计规范，并将体验分析回写到页面规则。"] },
+            { title: "设计后", items: ["输出运营策略、增长方案与投放策略。", "结合功能架构沉淀可复用的增长与用户运营思路。"] },
+            { title: "转译价值", items: ["将视觉作品从“看图”转化为“看判断”。", "让项目可以被产品、设计和研发共同理解。"] }
+          ]
+        },
+        {
+          type: "product",
+          label: "产品项目",
+          title: "服务大厅体验改版问题分析",
+          cover: caseAssets.portalProblem,
+          desc: "针对上手难、效率低、模块交互割裂等反馈，重新定义改版问题和解决方向。",
+          result: "输出：功能侧、体验侧、视觉侧三条改版路径。",
+          tags: ["体验诊断", "改版策略", "用户反馈"],
+          detail: "该案例展示如何把用户反馈拆成可执行的产品问题：既关注功能层级和操作路径，也处理表单信息、视觉一致性与关键概念表达。",
+          images: [
+            { src: caseAssets.portalProblem, caption: "问题分析页将用户反馈拆解为功能侧、体验侧、视觉侧三个解决方向。" }
+          ],
+          metrics: [
+            { value: "3 类", label: "问题归因维度" },
+            { value: "N 项", label: "页面入口和跳转收敛" },
+            { value: "1 套", label: "按钮与视觉规范统一" }
+          ],
+          sections: [
+            { title: "问题定义", items: ["用户反馈集中在上手难度大、操作效率低和模块交互体验不佳。", "根源在于前期调研规划不足，导致产品方向和信息架构不够清晰。"] },
+            { title: "功能侧", items: ["跳转按钮过多，层级繁杂。", "根据用户需求和使用热度，在个人中心展示真正需要的功能模块。"] },
+            { title: "体验侧", items: ["表单字段过多，重点不突出。", "将关键信息提炼成关键词，减少冗余信息，提高阅读理解效率。"] },
+            { title: "视觉侧", items: ["颜色使用不统一，增加认知成本。", "统一按钮颜色和页面状态，增强一致性并降低误操作。"] }
+          ]
+        },
+        {
+          type: "design",
+          label: "设计作品",
+          title: "武汉大学樱花预约",
+          cover: caseAssets.wuhanSakura,
+          desc: "围绕校友、游客等不同身份设计预约通道、身份校验、预约记录和结果查看。",
+          result: "输出：覆盖 Web 与 App 的预约体验方案。",
+          tags: ["Web & App", "预约流程", "身份校验"],
+          detail: "该案例以武汉大学樱花预约为主题，强调用户根据身份类别选择预约通道，并通过手机号、身份证、校友身份等方式完成资格校验。",
+          images: [
+            { src: caseAssets.wuhanSakura, caption: "樱花预约页面展示了预约通道、身份校验、登记说明和预约记录等核心体验。" }
+          ],
+          metrics: [
+            { value: "多身份", label: "校友、游客等通道" },
+            { value: "1 次/日", label: "单人每日预约限制" },
+            { value: "闭环", label: "登记、筛选、结果查看" }
+          ],
+          sections: [
+            { title: "项目背景", items: ["樱花季预约需要兼顾开放体验、秩序管理和资格筛选。", "不同身份用户需要被引导到不同的预约路径。"] },
+            { title: "预约通道", items: ["用户根据身份类别选择相应通道。", "校友可通过身份信息认证参与预约。"] },
+            { title: "校验规则", items: ["其他用户通过手机号和身份证完成验证。", "系统筛选发放资格，避免黄牛占用名额。"] },
+            { title: "结果闭环", items: ["用户可在“我的登记 / 预约”中查看资格结果。", "预约记录承担结果确认和后续入校提示。"] }
+          ]
+        },
+        {
+          type: "design",
+          label: "设计作品",
+          title: "招生概况数据大屏",
+          cover: caseAssets.admissionDashboard,
+          desc: "通过地图、招生人数、专业录取率等组件，组织适合管理视角的招生数据展示。",
+          result: "输出：面向管理者的深色数据可视化大屏。",
+          tags: ["数据可视化", "管理看板", "大屏设计"],
+          detail: "该案例展示了招生业务数据在大屏中的表达方式：用地图承载区域分布，用环图和条形图承载招生人数、专业录取率等关键指标。",
+          images: [
+            { src: caseAssets.admissionDashboard, caption: "招生概况大屏以深色视觉承载地图、招生人数、专业录取率和区域数据。" }
+          ],
+          metrics: [
+            { value: "地图", label: "区域招生分布" },
+            { value: "环图", label: "招生人数概览" },
+            { value: "条形图", label: "专业录取率对比" }
+          ],
+          sections: [
+            { title: "信息层级", items: ["首屏聚焦招生概况，避免管理者在明细中查找关键判断。", "地图用于表达地区分布，右侧图表用于承接核心指标。"] },
+            { title: "视觉策略", items: ["深色背景适配大屏展示环境。", "高亮色集中用于关键数据，降低装饰元素对判断的干扰。"] },
+            { title: "组件设计", items: ["使用环图表达总量与结构。", "使用横向条形图表达专业之间的录取率差异。"] },
+            { title: "产品价值", items: ["让招生管理者快速判断区域、专业和数量关系。", "为后续数据看板组件化提供视觉和信息组织参考。"] }
+          ]
+        },
+        {
+          type: "method",
+          label: "方法论",
+          title: "2023 UI/UX 作品集结构化整理",
+          cover: caseAssets.portalFramework,
+          desc: "将过往视觉稿重新组织为作品卡片、详情叙事和可复用的产品表达结构。",
+          result: "输出：从图片资产到门户作品模块的内容重构方案。",
+          tags: ["作品集叙事", "内容重构", "门户展示"],
+          detail: "该案例对应本次门户改造：不直接堆叠画板截图，而是把每个作品重写为背景、我的工作、关键设计、结果沉淀的图文结构。",
+          images: [
+            { src: caseAssets.portalFramework, caption: "功能架构图适合作为作品集中的方法论资产，强调逻辑关系和结构化表达。" },
+            { src: caseAssets.portalMoodboard, caption: "情绪板适合作为作品入口图，帮助访客快速理解项目风格和场景。" }
+          ],
+          metrics: [
+            { value: "6 个", label: "代表性作品卡片" },
+            { value: "4 段", label: "详情叙事结构" },
+            { value: "本地化", label: "图片资产稳定引用" }
+          ],
+          sections: [
+            { title: "整理原则", items: ["优先保留能体现产品判断和设计方法的画板。", "每张图都需要配套项目背景、关键动作和结果说明。"] },
+            { title: "信息结构", items: ["卡片层展示项目类型、摘要、标签和结果。", "详情层展示大图、指标、背景、工作内容和沉淀。"] },
+            { title: "视觉策略", items: ["保留当前门户的深色前卫风格。", "用作品截图作为视觉锚点，减少纯文字卡片的空泛感。"] },
+            { title: "后续扩展", items: ["正式站点可将当前数组替换为 CMS 或 Markdown 数据源。", "每个案例可继续扩展为独立详情页或 PDF 作品集。"] }
+          ]
+        }
       ];
 
       const blogPosts = [
@@ -766,7 +1192,8 @@
 
       function showView(name) {
         panels.forEach(p => p.classList.toggle("active", p.dataset.panel === name));
-        navButtons.forEach(b => b.classList.toggle("active", b.dataset.view === name));
+        const activeNav = name === "portfolio-detail" ? "portfolio" : name;
+        navButtons.forEach(b => b.classList.toggle("active", b.dataset.view === activeNav));
       }
 
       document.querySelectorAll("[data-view]").forEach(btn => {
@@ -803,21 +1230,94 @@
 
       /* ── 作品 ── */
       const caseCards = document.getElementById("caseCards");
+      const stage = document.querySelector(".stage");
+      const backToPortfolioBtn = document.getElementById("backToPortfolio");
+      const caseDetailType = document.getElementById("caseDetailType");
+      const caseDetailLabel = document.getElementById("caseDetailLabel");
+      const caseDetailTitle = document.getElementById("caseDetailTitle");
+      const caseDetailBody = document.getElementById("caseDetailBody");
+      const caseDetailResult = document.getElementById("caseDetailResult");
+      const caseDetailContent = document.getElementById("caseDetailContent");
+      let lastPortfolioFocused = null;
+
+      function renderTagList(tags = []) {
+        return tags.map(tag => `<span>${tag}</span>`).join("");
+      }
+
+      function renderCaseDetail(item) {
+        const visuals = item.images.map(image => `
+          <figure class="drawer-visual">
+            <img src="${image.src}" alt="${item.title} 作品图" loading="lazy" />
+            <figcaption class="drawer-caption">${image.caption}</figcaption>
+          </figure>
+        `).join("");
+
+        const metrics = item.metrics.map(metric => `
+          <div class="metric">
+            <strong>${metric.value}</strong>
+            <span>${metric.label}</span>
+          </div>
+        `).join("");
+
+        const sections = item.sections.map(section => `
+          <section class="detail-section">
+            <h3>${section.title}</h3>
+            <ul>
+              ${section.items.map(text => `<li>${text}</li>`).join("")}
+            </ul>
+          </section>
+        `).join("");
+
+        return `
+          <div class="drawer-tags">${renderTagList(item.tags)}</div>
+          ${visuals}
+          <div class="metric-strip">${metrics}</div>
+          <div class="detail-grid">${sections}</div>
+        `;
+      }
+
+      function openCaseDetail(item) {
+        lastPortfolioFocused = document.activeElement;
+        caseDetailType.textContent = item.label;
+        caseDetailLabel.textContent = item.label;
+        caseDetailTitle.textContent = item.title;
+        caseDetailBody.textContent = item.detail;
+        caseDetailResult.textContent = item.result;
+        caseDetailContent.innerHTML = renderCaseDetail(item);
+        showView("portfolio-detail");
+        stage.scrollTo({ top: 0, behavior: "smooth" });
+        backToPortfolioBtn.focus();
+      }
+
+      function backToPortfolio() {
+        showView("portfolio");
+        stage.scrollTo({ top: 0, behavior: "smooth" });
+        if (lastPortfolioFocused) lastPortfolioFocused.focus();
+      }
 
       function renderCases(type = "all") {
         caseCards.innerHTML = "";
         cases.filter(c => type === "all" || c.type === type).forEach(item => {
           const card = document.createElement("button");
           card.className = "card";
-          card.innerHTML = `<small>${item.label}</small><h3>${item.title}</h3><p>${item.desc}</p><div class="tagline">${item.result}</div>`;
-          card.addEventListener("click", () => openDrawer({
-            title: item.title,
-            body: item.detail,
-            extra: `<p style="margin-top:14px;color:var(--warm);font-size:13px;">${item.result}</p>`
-          }));
+          card.innerHTML = `
+            <div class="case-cover">
+              <img src="${item.cover}" alt="${item.title} 作品截图" loading="lazy" />
+            </div>
+            <div class="case-content">
+              <small>${item.label}</small>
+              <h3>${item.title}</h3>
+              <p>${item.desc}</p>
+              <div class="case-meta">${renderTagList(item.tags)}</div>
+              <div class="tagline">${item.result}</div>
+            </div>
+          `;
+          card.addEventListener("click", () => openCaseDetail(item));
           caseCards.appendChild(card);
         });
       }
+
+      backToPortfolioBtn.addEventListener("click", backToPortfolio);
 
       document.querySelectorAll("[data-filter]").forEach(btn => {
         btn.addEventListener("click", () => {
@@ -877,9 +1377,9 @@
         title: "联系我",
         body: "欢迎通过邮件或以下平台发起联系，适合交流面试、产品设计、AI 原型和合作机会。",
         extra: `
-          <div style="display:grid;gap:10px;margin-top:18px;">
-            <a href="mailto:hello@yourdomain.com" style="color:var(--cyan);font-size:15px;">✉ hello@yourdomain.com</a>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" style="color:var(--muted);font-size:14px;">GitHub →</a>
+          <div class="contact-links">
+            <a href="mailto:hello@yourdomain.com">hello@yourdomain.com</a>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub →</a>
           </div>`
       };
 
