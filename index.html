@@ -547,6 +547,137 @@
       .row-card h3 { margin-bottom: 10px; font-size: 20px; }
       .row-card p { color: var(--muted); line-height: 1.65; }
 
+      /* ── 晨读内容 ── */
+      .reading-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.92fr);
+        gap: 18px;
+      }
+
+      .reading-featured,
+      .reading-history {
+        min-height: 280px;
+        padding: 24px;
+        border: 1px solid var(--line);
+        background: var(--panel);
+        backdrop-filter: blur(8px);
+        clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%);
+      }
+
+      .reading-date {
+        display: inline-flex;
+        margin-bottom: 16px;
+        color: var(--acid);
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 18px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .reading-featured h3 {
+        margin-bottom: 14px;
+        font-size: 24px;
+        line-height: 32px;
+      }
+
+      .reading-featured p,
+      .reading-history p {
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .reading-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 22px;
+      }
+
+      .reading-history {
+        display: grid;
+        align-content: start;
+        gap: 12px;
+      }
+
+      .reading-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .reading-item {
+        width: 100%;
+        padding: 14px 0;
+        border: 0;
+        border-top: 1px solid var(--line);
+        color: var(--text);
+        background: transparent;
+        cursor: pointer;
+        text-align: left;
+        font: inherit;
+      }
+
+      .reading-item:hover h4 {
+        color: var(--cyan);
+      }
+
+      .reading-item h4 {
+        margin-bottom: 6px;
+        font-size: 15px;
+        line-height: 22px;
+        transition: color 160ms ease;
+      }
+
+      .reading-item span {
+        color: var(--faint);
+        font-size: 12px;
+        line-height: 18px;
+      }
+
+      .reading-status {
+        color: var(--faint);
+        font-size: 13px;
+        line-height: 20px;
+      }
+
+      .reading-content {
+        display: grid;
+        gap: 12px;
+        margin-top: 18px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .reading-content h3 {
+        margin-top: 10px;
+        color: var(--text);
+        font-size: 18px;
+        line-height: 26px;
+      }
+
+      .reading-content h4 {
+        margin-top: 8px;
+        color: var(--warm);
+        font-size: 15px;
+        line-height: 22px;
+      }
+
+      .reading-content ul,
+      .reading-content ol {
+        margin: 0;
+        padding-left: 20px;
+      }
+
+      .reading-content a {
+        color: var(--cyan);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+      .blog-view .blog-list {
+        margin-top: 18px;
+      }
+
       /* ── Drawer ── */
       .drawer {
         position: fixed;
@@ -818,6 +949,7 @@
 
         .cards,
         .blog-list,
+        .reading-layout,
         .resource-list,
         .ability-strip {
           grid-template-columns: 1fr;
@@ -950,8 +1082,20 @@
           <div class="section-head">
             <div>
               <h2 class="section-title">文章</h2>
-              <p>沉淀产品转型、设计复盘、AI 工作流和知识管理，作为公开展示专业思考的内容入口。</p>
+              <p>沉淀产品转型、设计复盘、AI 工作流和知识管理，并同步 Notion CMS 中已发布的每日 UI/产品前沿晨读。</p>
             </div>
+          </div>
+          <div class="reading-layout" aria-live="polite">
+            <article class="reading-featured" id="latestReading">
+              <p class="reading-status">正在读取晨读内容...</p>
+            </article>
+            <aside class="reading-history">
+              <div>
+                <h3>晨读历史</h3>
+                <p>按日期倒序展示已发布晨读。</p>
+              </div>
+              <div class="reading-list" id="readingList"></div>
+            </aside>
           </div>
           <div class="blog-list" id="blogList"></div>
         </section>
@@ -1159,32 +1303,14 @@
           detail: "B 端页面信息密度过低会让用户频繁翻页，过高则造成认知负担。本文提出用「决策频率」和「数据关系复杂度」两个维度来评估页面应该呈现多少信息。" }
       ];
 
-      const resources = {
-        design: [
-          { name: "Figma", desc: "设计协作、原型和组件库", url: "https://figma.com" },
-          { name: "Mobbin", desc: "移动端产品界面参考", url: "https://mobbin.com" },
-          { name: "Dribbble", desc: "视觉灵感和作品发布", url: "https://dribbble.com" },
-          { name: "IconFont", desc: "中文图标资源库", url: "https://www.iconfont.cn" }
-        ],
-        product: [
-          { name: "Notion", desc: "需求、知识库和项目整理", url: "https://notion.so" },
-          { name: "Linear", desc: "任务流转和缺陷跟踪", url: "https://linear.app" },
-          { name: "Google Analytics", desc: "基础访问与转化分析", url: "https://analytics.google.com" },
-          { name: "飞书文档", desc: "团队协作和 PRD 维护", url: "https://feishu.cn" }
-        ],
-        ai: [
-          { name: "ChatGPT", desc: "需求分析、原型思考和文本整理", url: "https://chat.openai.com" },
-          { name: "Perplexity", desc: "资料检索和竞品研究", url: "https://perplexity.ai" },
-          { name: "Midjourney", desc: "视觉概念探索", url: "https://midjourney.com" },
-          { name: "Cursor", desc: "代码辅助和原型开发", url: "https://cursor.sh" }
-        ],
-        dev: [
-          { name: "GitHub", desc: "代码仓库与发布流程", url: "https://github.com" },
-          { name: "Vercel", desc: "前端部署与预览", url: "https://vercel.com" },
-          { name: "MDN", desc: "Web 标准查询", url: "https://developer.mozilla.org" },
-          { name: "Tailwind CSS", desc: "界面样式快速构建", url: "https://tailwindcss.com" }
-        ]
+      const readingEndpoints = {
+        latest: "content/readings/latest.json",
+        index: "content/readings/index.json"
       };
+
+      const toolEndpoint = "content/tools/index.json";
+      const defaultResourceGroups = { design: [], product: [], ai: [], dev: [] };
+      let resourceGroups = { ...defaultResourceGroups };
 
       /* ── 视图切换 ── */
       const panels = document.querySelectorAll("[data-panel]");
@@ -1348,12 +1474,181 @@
         });
       }
 
+      /* ── 晨读 CMS 数据 ── */
+      const latestReading = document.getElementById("latestReading");
+      const readingList = document.getElementById("readingList");
+
+      function escapeHtml(value = "") {
+        return String(value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function formatReadingDate(date) {
+        if (!date) return "未设置日期";
+        return new Intl.DateTimeFormat("zh-CN", { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(`${date}T00:00:00+08:00`));
+      }
+
+      function renderReadingTags(tags = []) {
+        return tags.map(tag => `<span>${escapeHtml(tag)}</span>`).join("");
+      }
+
+      function markdownToHtml(markdown = "") {
+        const lines = markdown.split(/\r?\n/);
+        const html = [];
+        let listType = null;
+
+        const closeList = () => {
+          if (!listType) return;
+          html.push(`</${listType}>`);
+          listType = null;
+        };
+
+        const inline = text => escapeHtml(text).replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+
+        lines.forEach(line => {
+          const trimmed = line.trim();
+          if (!trimmed) {
+            closeList();
+            return;
+          }
+
+          if (trimmed.startsWith("## ")) {
+            closeList();
+            html.push(`<h3>${inline(trimmed.slice(3))}</h3>`);
+            return;
+          }
+
+          if (trimmed.startsWith("### ")) {
+            closeList();
+            html.push(`<h4>${inline(trimmed.slice(4))}</h4>`);
+            return;
+          }
+
+          if (/^- /.test(trimmed)) {
+            if (listType !== "ul") {
+              closeList();
+              listType = "ul";
+              html.push("<ul>");
+            }
+            html.push(`<li>${inline(trimmed.slice(2))}</li>`);
+            return;
+          }
+
+          if (/^\d+\. /.test(trimmed)) {
+            if (listType !== "ol") {
+              closeList();
+              listType = "ol";
+              html.push("<ol>");
+            }
+            html.push(`<li>${inline(trimmed.replace(/^\d+\. /, ""))}</li>`);
+            return;
+          }
+
+          closeList();
+          html.push(`<p>${inline(trimmed)}</p>`);
+        });
+
+        closeList();
+        return `<div class="reading-content">${html.join("")}</div>`;
+      }
+
+      function openReading(reading) {
+        openDrawer({
+          title: reading.title,
+          body: reading.trend?.summary || reading.summary || "",
+          extra: `
+            <div class="drawer-tags">${renderReadingTags(reading.tags)}</div>
+            <p style="margin-top:14px;color:var(--faint);font-size:12px;">${formatReadingDate(reading.date)} · ${reading.sourcesCount || 0} 个来源</p>
+            ${markdownToHtml(reading.contentMarkdown || "")}
+          `
+        });
+      }
+
+      function renderLatestReading(reading) {
+        if (!reading) {
+          latestReading.innerHTML = '<p class="reading-status">暂无已发布晨读。</p>';
+          return;
+        }
+
+        latestReading.innerHTML = `
+          <span class="reading-date">${formatReadingDate(reading.date)}</span>
+          <h3>${escapeHtml(reading.trend?.title || reading.title)}</h3>
+          <p>${escapeHtml(reading.trend?.summary || reading.summary || "")}</p>
+          <div class="drawer-tags">${renderReadingTags(reading.tags)}</div>
+          <div class="reading-actions">
+            <button class="pill primary" id="openLatestReading">阅读详情</button>
+          </div>
+        `;
+        document.getElementById("openLatestReading").addEventListener("click", () => openReading(reading));
+      }
+
+      function renderReadingList(readings = []) {
+        if (!readings.length) {
+          readingList.innerHTML = '<p class="reading-status">暂无历史归档。</p>';
+          return;
+        }
+
+        readingList.innerHTML = "";
+        readings.forEach(reading => {
+          const button = document.createElement("button");
+          button.className = "reading-item";
+          button.innerHTML = `
+            <h4>${escapeHtml(reading.title)}</h4>
+            <span>${formatReadingDate(reading.date)} · ${escapeHtml(reading.summary || "")}</span>
+          `;
+          button.addEventListener("click", async () => {
+            const detail = await fetchReadingDetail(reading);
+            openReading(detail || reading);
+          });
+          readingList.appendChild(button);
+        });
+      }
+
+      async function fetchReadingDetail(reading) {
+        if (reading.contentMarkdown) return reading;
+        if (!reading.path) return reading;
+        try {
+          const response = await fetch(reading.path, { cache: "no-store" });
+          if (!response.ok) return reading;
+          return await response.json();
+        } catch {
+          return reading;
+        }
+      }
+
+      async function loadReadings() {
+        try {
+          const [latestResponse, indexResponse] = await Promise.all([
+            fetch(readingEndpoints.latest, { cache: "no-store" }),
+            fetch(readingEndpoints.index, { cache: "no-store" })
+          ]);
+
+          const latest = latestResponse.ok ? await latestResponse.json() : null;
+          const index = indexResponse.ok ? await indexResponse.json() : { readings: [] };
+          renderLatestReading(latest);
+          renderReadingList(index.readings || []);
+        } catch {
+          latestReading.innerHTML = '<p class="reading-status">晨读内容读取失败，请稍后刷新。</p>';
+          readingList.innerHTML = '<p class="reading-status">历史归档读取失败。</p>';
+        }
+      }
+
       /* ── 工具箱 ── */
       const resourceList = document.getElementById("resourceList");
 
       function renderResources(type = "design") {
         resourceList.innerHTML = "";
-        resources[type].forEach(({ name, desc, url }) => {
+        const items = resourceGroups[type] || [];
+        if (!items.length) {
+          resourceList.innerHTML = '<p class="reading-status">暂无已发布工具资源。</p>';
+          return;
+        }
+
+        items.forEach(({ name, desc, url }) => {
           const card = document.createElement("a");
           card.className = "row-card";
           card.href = url;
@@ -1362,6 +1657,23 @@
           card.innerHTML = `<h3>${name}</h3><p>${desc}</p><div class="tagline">↗ 打开工具</div>`;
           resourceList.appendChild(card);
         });
+      }
+
+      async function loadResources() {
+        try {
+          const response = await fetch(toolEndpoint, { cache: "no-store" });
+          if (!response.ok) {
+            renderResources();
+            return;
+          }
+          const data = await response.json();
+          resourceGroups = { ...defaultResourceGroups, ...(data.groups || {}) };
+          const active = document.querySelector("[data-resource].active")?.dataset.resource || "design";
+          renderResources(active);
+        } catch {
+          resourceGroups = { ...defaultResourceGroups };
+          renderResources();
+        }
       }
 
       document.querySelectorAll("[data-resource]").forEach(btn => {
@@ -1389,7 +1701,8 @@
       /* ── 初始化 ── */
       renderCases();
       renderBlog();
-      renderResources();
+      loadReadings();
+      loadResources();
     </script>
   </body>
 </html>

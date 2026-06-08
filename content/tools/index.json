@@ -1,0 +1,29 @@
+{
+  "generatedAt": "2026-06-08T02:45:00.000Z",
+  "groups": {
+    "design": [
+      { "id": "37921b6f-0f3a-8169-997a-eeaa2ac7240e", "name": "Figma", "desc": "设计协作、原型和组件库", "url": "https://figma.com", "category": "设计", "order": 10, "tags": ["设计协作"] },
+      { "id": "37921b6f-0f3a-8155-bd6f-c604b1fe793a", "name": "Mobbin", "desc": "移动端产品界面参考", "url": "https://mobbin.com", "category": "设计", "order": 20, "tags": ["灵感参考"] },
+      { "id": "37921b6f-0f3a-81d9-ae8a-ecece703bd50", "name": "Dribbble", "desc": "视觉灵感和作品发布", "url": "https://dribbble.com", "category": "设计", "order": 30, "tags": ["灵感参考"] },
+      { "id": "37921b6f-0f3a-8165-87e9-d8eec0bacaae", "name": "IconFont", "desc": "中文图标资源库", "url": "https://www.iconfont.cn", "category": "设计", "order": 40, "tags": ["设计协作"] }
+    ],
+    "product": [
+      { "id": "37921b6f-0f3a-8144-947a-c123a55e9bd4", "name": "Notion", "desc": "需求、知识库和项目整理", "url": "https://notion.so", "category": "产品", "order": 10, "tags": ["产品管理"] },
+      { "id": "37921b6f-0f3a-817f-a24c-f42a042c5afb", "name": "Linear", "desc": "任务流转和缺陷跟踪", "url": "https://linear.app", "category": "产品", "order": 20, "tags": ["产品管理"] },
+      { "id": "37921b6f-0f3a-81c4-9924-d507d0d68af2", "name": "Google Analytics", "desc": "基础访问与转化分析", "url": "https://analytics.google.com", "category": "产品", "order": 30, "tags": ["数据分析"] },
+      { "id": "37921b6f-0f3a-812a-a3a7-e0fa5ed1597a", "name": "飞书文档", "desc": "团队协作和 PRD 维护", "url": "https://feishu.cn", "category": "产品", "order": 40, "tags": ["产品管理"] }
+    ],
+    "ai": [
+      { "id": "37921b6f-0f3a-817d-8cd2-dfc8b9b2fcd3", "name": "ChatGPT", "desc": "需求分析、原型思考和文本整理", "url": "https://chat.openai.com", "category": "AI", "order": 10, "tags": ["AI 工作流"] },
+      { "id": "37921b6f-0f3a-81de-952f-fe9fc6bd14dd", "name": "Perplexity", "desc": "资料检索和竞品研究", "url": "https://perplexity.ai", "category": "AI", "order": 20, "tags": ["AI 工作流"] },
+      { "id": "37921b6f-0f3a-8160-9702-faa4ce3a2474", "name": "Midjourney", "desc": "视觉概念探索", "url": "https://midjourney.com", "category": "AI", "order": 30, "tags": ["AI 工作流", "灵感参考"] },
+      { "id": "37921b6f-0f3a-816c-b599-fb7d097c9d8f", "name": "Cursor", "desc": "代码辅助和原型开发", "url": "https://cursor.sh", "category": "AI", "order": 40, "tags": ["AI 工作流", "研发协作"] }
+    ],
+    "dev": [
+      { "id": "37921b6f-0f3a-8193-99c6-dc35b2d55e4b", "name": "GitHub", "desc": "代码仓库与发布流程", "url": "https://github.com", "category": "研发", "order": 10, "tags": ["研发协作"] },
+      { "id": "37921b6f-0f3a-8108-8f81-e029cf16f8b2", "name": "Vercel", "desc": "前端部署与预览", "url": "https://vercel.com", "category": "研发", "order": 20, "tags": ["研发协作"] },
+      { "id": "37921b6f-0f3a-81a2-879d-de4f19a3a33c", "name": "MDN", "desc": "Web 标准查询", "url": "https://developer.mozilla.org", "category": "研发", "order": 30, "tags": ["研发协作"] },
+      { "id": "37921b6f-0f3a-8193-8dd8-c97adde02d2b", "name": "Tailwind CSS", "desc": "界面样式快速构建", "url": "https://tailwindcss.com", "category": "研发", "order": 40, "tags": ["研发协作", "设计协作"] }
+    ]
+  }
+}

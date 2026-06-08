@@ -1,0 +1,18 @@
+{
+  "id": "37921b6f-0f3a-8130-901a-da602c06fcec",
+  "date": "2026-06-05",
+  "title": "2026-06-05 UI/产品前沿晨读",
+  "slug": "2026-06-05",
+  "status": "已发布",
+  "isLatest": false,
+  "trend": {
+    "title": "界面会越来越像意图层",
+    "summary": "AI 正在把设计的竞争点从“产出界面”推向“定义意图、约束和评估体验”。"
+  },
+  "summary": "AI Agent 与 Invisible Interface 正在改变交互方式，设计重点从画流程转向系统如何理解、确认和解释用户意图。",
+  "tags": ["UI", "UX", "产品管理", "AI", "HCI"],
+  "sourcesCount": 3,
+  "notionUrl": "https://app.notion.com/p/37921b6f0f3a8130901ada602c06fcec",
+  "path": "content/readings/archive/2026-06-05.json",
+  "contentMarkdown": "## 趋势\nAI 正在把设计的竞争点从“产出界面”推向“定义意图、约束和评估体验”。IEEE Computer Society 近期提到 2026 HCI 的核心变化是 AI Agent 与 Invisible Interface：用户不一定总是点击页面，而是表达目标，由系统推断、执行、反馈。对设计师和产品经理来说，重点会从“画流程”转向“设计系统如何理解用户意图、何时确认、何时拒绝、如何解释”。\n\n## 文章 / 报告要点\n### 1. IEEE Computer Society：Top HCI Trends in 2026\n- 来源：https://www.computer.org/publications/tech-news/trends/hci-trends-2026\n- 要点：AI Agent 与 Invisible Interface 让用户从操作界面转向表达意图，设计需要覆盖确认、拒绝、解释和失败恢复。\n\n### 2. Figma：Web Design Trends\n- 来源：https://www.figma.com/resource-library/web-design-trends/\n- 要点：AI 不只是提效工具，而是让产品更个性化、更动态。生成式 UI、动效和更贴近上下文的界面组织值得关注。\n\n### 3. Usable but Conventional\n- 来源：https://arxiv.org/abs/2605.15124\n- 要点：AI 生成的界面原型通常“可用但保守”，团队不能把 AI 初稿当最终方案，仍需要研究、差异化策略和可用性验证。"
+}

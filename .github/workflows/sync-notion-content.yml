@@ -1,0 +1,43 @@
+name: 同步 Notion 内容
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Asia/Shanghai 工作日 09:35，对应 UTC 01:35。
+    - cron: "35 1 * * 1-5"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    name: 同步晨读与工具导航
+    runs-on: ubuntu-latest
+    steps:
+      - name: 拉取仓库
+        uses: actions/checkout@v4
+
+      - name: 配置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: 从 Notion 生成公开 JSON
+        run: node scripts/sync-notion-readings.mjs
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATA_SOURCE_ID: ${{ vars.NOTION_DATA_SOURCE_ID || '1f7ecc85-3324-4c87-9b26-e2281393f188' }}
+          NOTION_TOOLS_DATA_SOURCE_ID: ${{ vars.NOTION_TOOLS_DATA_SOURCE_ID || '653252c3-0b5b-4f8f-987f-0cda8f1b2780' }}
+          NOTION_VERSION: "2025-09-03"
+
+      - name: 提交内容变更
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/readings content/tools
+          if git diff --cached --quiet; then
+            echo "没有新的 Notion 内容需要提交。"
+          else
+            git commit -m "chore: 同步 Notion CMS 内容"
+            git push
+          fi
