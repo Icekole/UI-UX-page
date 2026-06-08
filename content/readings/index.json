@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-08T02:45:00.000Z",
+  "generatedAt": "2026-06-08T02:49:48.728Z",
   "readings": [
     {
       "id": "37921b6f-0f3a-815b-abb5-c08053437867",
@@ -7,7 +7,13 @@
       "title": "2026-06-08 UI/产品前沿晨读",
       "slug": "2026-06-08",
       "summary": "AI 正在把产品体验从“用户操作页面”推向“系统理解意图并执行任务”。",
-      "tags": ["UI", "UX", "产品管理", "AI", "HCI"],
+      "tags": [
+        "UI",
+        "UX",
+        "产品管理",
+        "AI",
+        "HCI"
+      ],
       "sourcesCount": 5,
       "path": "content/readings/archive/2026-06-08.json"
     },
@@ -17,7 +23,13 @@
       "title": "2026-06-05 UI/产品前沿晨读",
       "slug": "2026-06-05",
       "summary": "AI Agent 与 Invisible Interface 正在改变交互方式，设计重点从画流程转向系统如何理解、确认和解释用户意图。",
-      "tags": ["UI", "UX", "产品管理", "AI", "HCI"],
+      "tags": [
+        "UI",
+        "UX",
+        "产品管理",
+        "AI",
+        "HCI"
+      ],
       "sourcesCount": 3,
       "path": "content/readings/archive/2026-06-05.json"
     }
