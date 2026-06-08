@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-08T02:55:00.093Z",
+  "generatedAt": "2026-06-08T03:25:07.713Z",
   "groups": {
     "design": [
       {
@@ -42,6 +42,51 @@
         "url": "https://www.iconfont.cn",
         "category": "设计",
         "order": 40,
+        "tags": [
+          "设计协作"
+        ]
+      },
+      {
+        "id": "37921b6f-0f3a-81d2-834f-da35e898816f",
+        "name": "Pinterest",
+        "desc": "视觉灵感、情绪板和参考图收集",
+        "url": "https://jp.pinterest.com/",
+        "category": "设计",
+        "order": 50,
+        "tags": [
+          "灵感参考",
+          "设计协作"
+        ]
+      },
+      {
+        "id": "37921b6f-0f3a-81fa-ad39-ca04cc8aeb46",
+        "name": "花瓣",
+        "desc": "中文设计灵感、图片采集和视觉参考库",
+        "url": "https://huaban.com/",
+        "category": "设计",
+        "order": 60,
+        "tags": [
+          "灵感参考"
+        ]
+      },
+      {
+        "id": "37921b6f-0f3a-81e8-bc48-cbd155cc98c8",
+        "name": "TinyPNG",
+        "desc": "图片压缩与素材体积优化",
+        "url": "https://tinypng.com/",
+        "category": "设计",
+        "order": 70,
+        "tags": [
+          "设计协作"
+        ]
+      },
+      {
+        "id": "37921b6f-0f3a-813e-8392-f3a71ead14f6",
+        "name": "Remix Icon",
+        "desc": "开源图标库，适合产品原型和前端界面使用",
+        "url": "http://remixicon.com/",
+        "category": "设计",
+        "order": 80,
         "tags": [
           "设计协作"
         ]
@@ -88,6 +133,17 @@
         "url": "https://feishu.cn",
         "category": "产品",
         "order": 40,
+        "tags": [
+          "产品管理"
+        ]
+      },
+      {
+        "id": "37921b6f-0f3a-8185-847d-ee535a7794fa",
+        "name": "iLovePDF",
+        "desc": "PDF 合并、压缩、转换和日常文档处理",
+        "url": "https://www.ilovepdf.com/",
+        "category": "产品",
+        "order": 50,
         "tags": [
           "产品管理"
         ]
@@ -185,6 +241,17 @@
         "tags": [
           "研发协作",
           "设计协作"
+        ]
+      },
+      {
+        "id": "37921b6f-0f3a-81b9-ab8c-dbb116b85178",
+        "name": "ProSettings CS2",
+        "desc": "CS2 职业选手设置、外设参数和游戏配置参考",
+        "url": "https://prosettings.net/games/cs2/",
+        "category": "研发",
+        "order": 50,
+        "tags": [
+          "灵感参考"
         ]
       }
     ]
