@@ -1,6 +1,23 @@
 {
-  "generatedAt": "2026-06-08T03:25:07.313Z",
+  "generatedAt": "2026-06-08T09:35:08.856Z",
   "readings": [
+    {
+      "id": "37921b6f-0f3a-81a7-bc11-cc24b3503356",
+      "date": "2026-06-08",
+      "title": "2026-06-08 UI/产品前沿晨读",
+      "slug": "2026-06-08-morning-0931",
+      "summary": "AI Agent 正在让产品体验从页面流转转向服务编排：界面只是前台，真正的体验质量取决于内容治理、任务边界、人工接管和系统可解释性。",
+      "tags": [
+        "UI",
+        "UX",
+        "产品管理",
+        "AI",
+        "设计趋势",
+        "HCI"
+      ],
+      "sourcesCount": 5,
+      "path": "content/readings/archive/2026-06-08-morning-0931.json"
+    },
     {
       "id": "37921b6f-0f3a-81c3-a185-f326c70b4b11",
       "date": "2026-06-08",
