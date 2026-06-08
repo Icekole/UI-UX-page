@@ -1564,8 +1564,8 @@
           const button = document.createElement("button");
           button.className = "reading-item";
           button.innerHTML = `
-            <h4>${escapeHtml(reading.title)}</h4>
-            <span>${formatReadingDate(reading.date)} · ${escapeHtml(reading.summary || "")}</span>
+            <h4>${formatReadingDate(reading.date)}</h4>
+            <span>${escapeHtml(reading.summary || reading.title || "")}</span>
           `;
           button.addEventListener("click", async () => {
             const detail = await fetchReadingDetail(reading);
