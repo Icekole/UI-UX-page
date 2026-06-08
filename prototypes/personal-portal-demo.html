@@ -1097,7 +1097,6 @@
               <div class="reading-list" id="readingList"></div>
             </aside>
           </div>
-          <div class="blog-list" id="blogList"></div>
         </section>
 
         <!-- 工具箱 -->
@@ -1292,17 +1291,6 @@
         }
       ];
 
-      const blogPosts = [
-        { title: "从设计评审到产品决策", summary: "记录一次从界面问题反推业务目标、数据指标和协作机制的过程。", tag: "产品方法", readTime: "8 分钟阅读",
-          detail: "起点是一次例行设计评审，开发质疑按钮位置的合理性。而深入讨论后我们发现，真正的问题是业务目标不清晰——这篇文章记录了如何从一个界面细节反推到指标定义和协作规则。" },
-        { title: "如何整理一个可复用的作品模板", summary: "把作品从「看图」升级为「看判断」，让项目表达更适合产品岗位和合作沟通。", tag: "作品表达", readTime: "6 分钟阅读",
-          detail: "产品岗位作品表达与设计岗位的核心差异在于：前者需要展示判断力，而不只是视觉执行力。本文介绍如何用「背景→问题→方案→结果」四段式结构重新组织每个案例。" },
-        { title: "AI 辅助 PRD 的边界", summary: "哪些环节适合交给 AI，哪些判断必须由产品负责人自己完成。", tag: "AI 工作流", readTime: "10 分钟阅读",
-          detail: "AI 可以很好地完成：结构化整理、场景穷举、文案润色、竞品调研摘要。但这些判断必须由人来做：优先级取舍、利益相关方博弈、用户真实动机识别。" },
-        { title: "B 端页面的信息密度", summary: "在效率、可读性和业务复杂度之间找到稳定的设计尺度。", tag: "B 端体验", readTime: "7 分钟阅读",
-          detail: "B 端页面信息密度过低会让用户频繁翻页，过高则造成认知负担。本文提出用「决策频率」和「数据关系复杂度」两个维度来评估页面应该呈现多少信息。" }
-      ];
-
       const readingEndpoints = {
         latest: "content/readings/latest.json",
         index: "content/readings/index.json"
@@ -1452,27 +1440,6 @@
           renderCases(btn.dataset.filter);
         });
       });
-
-      /* ── 文章 ── */
-      const blogList = document.getElementById("blogList");
-
-      function renderBlog() {
-        blogList.innerHTML = "";
-        blogPosts.forEach(post => {
-          const card = document.createElement("article");
-          card.className = "row-card";
-          card.tabIndex = 0;
-          card.innerHTML = `<h3>${post.title}</h3><p>${post.summary}</p><div class="tagline">${post.tag} · ${post.readTime}</div>`;
-          const openPost = () => openDrawer({
-            title: post.title,
-            body: post.detail,
-            extra: `<p style="margin-top:14px;color:var(--faint);font-size:12px;">${post.tag} · ${post.readTime}</p>`
-          });
-          card.addEventListener("click", openPost);
-          card.addEventListener("keydown", e => { if (e.key === "Enter") openPost(); });
-          blogList.appendChild(card);
-        });
-      }
 
       /* ── 晨读 CMS 数据 ── */
       const latestReading = document.getElementById("latestReading");
@@ -1700,7 +1667,6 @@
 
       /* ── 初始化 ── */
       renderCases();
-      renderBlog();
       loadReadings();
       loadResources();
     </script>
