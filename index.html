@@ -728,12 +728,102 @@
         line-height: 24px;
       }
 
+      .detail-section p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.75;
+      }
+
+      .detail-section p + ul {
+        margin-top: 12px;
+      }
+
       .detail-section ul {
         margin: 0;
         padding-left: 18px;
         color: var(--muted);
         font-size: 14px;
         line-height: 1.7;
+      }
+
+      .article-detail-content {
+        display: grid;
+        gap: 18px;
+        margin-top: 18px;
+      }
+
+      .article-detail-content .detail-grid {
+        margin-top: 0;
+      }
+
+      .article-summary {
+        min-height: auto;
+        border-color: rgba(0, 215, 255, 0.22);
+        background: rgba(0, 215, 255, 0.06);
+      }
+
+      .article-description {
+        display: grid;
+        gap: 10px;
+      }
+
+      .article-description strong {
+        display: block;
+        color: var(--warm);
+        font-size: 13px;
+        line-height: 20px;
+      }
+
+      .article-detail-block {
+        display: grid;
+        gap: 14px;
+      }
+
+      .article-detail-heading {
+        margin: 4px 0 0;
+        color: var(--text);
+        font-size: 18px;
+        line-height: 26px;
+      }
+
+      .article-rich-content {
+        display: grid;
+        gap: 14px;
+        margin-top: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.75;
+      }
+
+      .article-rich-content h3 {
+        margin-top: 10px;
+        color: var(--text);
+        font-size: 18px;
+        line-height: 26px;
+      }
+
+      .article-rich-content h4 {
+        margin-top: 8px;
+        color: var(--warm);
+        font-size: 15px;
+        line-height: 22px;
+      }
+
+      .article-rich-content p {
+        margin: 0;
+      }
+
+      .article-rich-content ul,
+      .article-rich-content ol {
+        margin: 0;
+        padding-left: 20px;
+      }
+
+      .article-rich-content a {
+        color: var(--cyan);
+        text-decoration: underline;
+        text-underline-offset: 3px;
       }
 
       .metric-strip {
@@ -809,6 +899,11 @@
         font-size: clamp(34px, 5vw, 62px);
         line-height: 1;
         font-weight: 900;
+      }
+
+      .article-detail-view .detail-title {
+        font-size: 42px;
+        line-height: 1.18;
       }
 
       .detail-summary {
@@ -917,6 +1012,10 @@
 
         .detail-hero {
           grid-template-columns: 1fr;
+        }
+
+        .article-detail-view .detail-title {
+          font-size: 30px;
         }
 
         .detail-grid,
@@ -1274,56 +1373,270 @@
           weekday: "MON",
           poster: readingAssets.monday,
           title: "周一晨读｜从设计评审到产品决策",
+          listSummary: "一次设计评审的价值，不是把按钮位置争论清楚，而是把业务目标、用户任务和指标口径重新对齐。",
           summary: "今日晨读：用一次设计评审复盘，拆解如何从界面争议回到业务目标、指标定义与协作机制。",
+          trendTitle: "从界面争议回到产品判断：设计评审需要先定义成功标准",
+          trendSummary: "当团队围绕按钮位置、页面布局或交互细节反复争论时，真正缺失的往往不是视觉结论，而是目标、指标和协作边界。产品负责人需要把讨论从偏好判断拉回用户任务和业务结果。",
           tag: "产品方法",
           readTime: "8 分钟阅读",
           date: "2026年6月8日 周一",
           isoDate: "2026-06-08",
-          detail: "起点是一次例行设计评审，开发质疑按钮位置的合理性。而深入讨论后我们发现，真正的问题是业务目标不清晰。本文记录如何从一个界面细节反推到指标定义、需求优先级和跨角色协作规则。"
+          detail: "起点是一次例行设计评审，开发质疑按钮位置的合理性。而深入讨论后我们发现，真正的问题是业务目标不清晰。本文记录如何从一个界面细节反推到指标定义、需求优先级和跨角色协作规则。",
+          sections: [
+            {
+              title: "问题起点",
+              body: "这次评审表面上是在讨论一个按钮应该放在列表右侧、底部固定区还是详情页内部，但争议持续出现，说明团队并没有围绕同一个目标做判断。",
+              items: [
+                "设计侧关注路径是否顺手，研发侧关注实现成本，业务侧关注转化和时效。",
+                "如果只停留在按钮位置，结论会变成偏好投票；如果回到任务目标，讨论才会变成方案选择。",
+                "评审前缺少成功指标，是这类争议最常见的根因。"
+              ]
+            },
+            {
+              title: "分析路径",
+              body: "从界面争议回到产品问题，需要把用户任务、业务目标和指标口径拆开。",
+              items: [
+                "先确认用户在该页面到底要完成什么任务，是提交、复核、查找还是批量处理。",
+                "再定义业务希望提升的结果，是完成率、转化率、处理时长还是错误率。",
+                "最后检查当前交互是否支持这个结果，而不是只比较视觉上的显眼程度。"
+              ]
+            },
+            {
+              title: "产品判断",
+              body: "同一个入口在不同目标下会有完全不同的合理位置，因此设计评审需要先给出判断标准。",
+              items: [
+                "高频、低风险动作适合前置；低频、高风险动作需要二次确认和更强上下文。",
+                "如果目标是减少遗漏，入口需要靠近用户扫描路径；如果目标是降低误触，入口应该靠近信息确认区。",
+                "当指标相互冲突时，产品负责人需要明确优先级，而不是把冲突留给界面解决。"
+              ]
+            },
+            {
+              title: "落地动作",
+              body: "评审不是一次性会议，而应该沉淀为下一轮需求和设计的协作规则。",
+              items: [
+                "评审前补齐页面目标、关键用户、成功指标和约束条件。",
+                "评审中把争议记录为假设，标注需要数据验证还是业务拍板。",
+                "评审后将结论回写 PRD 和交互说明，避免下一轮继续重复讨论。"
+              ]
+            }
+          ]
         },
         {
           weekday: "TUE",
           poster: readingAssets.tuesday,
           title: "周二晨读｜如何整理一个可复用的作品模板",
+          listSummary: "作品集不应该只展示视觉完成度，还要让读者看到问题拆解、方案取舍和可复用的产品判断。",
           summary: "今日晨读：把作品从「看图」升级为「看判断」，让项目表达更适合产品岗位和合作沟通。",
+          trendTitle: "从作品展示到能力证明：作品模板需要服务产品判断表达",
+          trendSummary: "面向产品岗位或复合型协作场景，作品表达的重点会从“最终画面是否好看”转向“为什么这样做、如何推进、结果如何验证”。模板的核心价值是降低读者理解成本。",
           tag: "作品表达",
           readTime: "6 分钟阅读",
           date: "2026年6月9日 周二",
           isoDate: "2026-06-09",
-          detail: "产品岗位作品表达与设计岗位的核心差异在于：前者需要展示判断力，而不只是视觉执行力。本文介绍如何用「背景、问题、方案、结果」四段式结构重新组织案例，让访客更快理解你的角色、取舍和结果。"
+          detail: "产品岗位作品表达与设计岗位的核心差异在于：前者需要展示判断力，而不只是视觉执行力。本文介绍如何用「背景、问题、方案、结果」四段式结构重新组织案例，让访客更快理解你的角色、取舍和结果。",
+          sections: [
+            {
+              title: "表达目标",
+              body: "作品模板的价值不是统一版式，而是帮助读者快速判断你在项目中解决了什么问题、做了什么取舍、产生了什么结果。",
+              items: [
+                "设计岗位可以强调画面完成度，但产品方向更需要展示问题拆解和方案推进。",
+                "每个案例都应该回答：背景是什么、矛盾在哪里、你如何判断、结果如何验证。",
+                "图片负责建立可信度，文字负责解释判断过程。"
+              ]
+            },
+            {
+              title: "四段式结构",
+              body: "一个可复用的作品详情页可以固定为背景、问题、方案、结果四段。",
+              items: [
+                "背景：说明业务场景、用户角色和项目限制，不写空泛的项目介绍。",
+                "问题：用用户行为、业务指标或流程断点解释为什么需要改。",
+                "方案：展示关键页面和核心交互，同时写出取舍原因。",
+                "结果：即使没有正式数据，也要写清交付物、影响范围和后续验证方式。"
+              ]
+            },
+            {
+              title: "图文关系",
+              body: "图文并茂不是把截图堆满页面，而是让每张图都承担一个说明任务。",
+              items: [
+                "入口图用于让读者判断项目类型和视觉风格。",
+                "流程图用于说明角色、状态和页面之间的关系。",
+                "关键界面图用于承接方案解释，避免读者只看到最终样式。"
+              ]
+            },
+            {
+              title: "常见误区",
+              body: "作品表达最容易失衡的地方，是把项目写成视觉展示或长篇自述。",
+              items: [
+                "不要只写“负责 UI 设计”，要说明为什么这样设计。",
+                "不要只罗列页面数量，要说明核心页面解决了什么问题。",
+                "不要在公开站点展示敏感数据，应使用脱敏、概括和重绘图。"
+              ]
+            }
+          ]
         },
         {
           weekday: "WED",
           poster: readingAssets.wednesday,
           title: "周三晨读｜AI 辅助 PRD 的边界",
-          summary: "今日晨读：梳理 AI 能提升效率的环节，以及产品负责人必须自己完成的判断。",
+          listSummary: "AI 产品设计正在从“优化页面体验”走向“定义代理式行动边界”：谁来判断、谁来执行、何时确认、如何追踪，将成为 PM 和 UI/UX 的核心工作。",
+          summary: "AI 产品设计正在从“优化页面体验”走向“定义代理式行动边界”：谁来判断、谁来执行、何时确认、如何追踪，将成为 PM 和 UI/UX 的核心工作。",
+          trendTitle: "从 UX 到 AX：设计对象正在从页面体验扩展为 AI 代理的行动边界",
+          trendSummary: "AI 产品的设计重点正在从单点界面效率转向代理式行动的边界管理：用户意图如何被理解、系统能代做什么、何时需要确认、失败后如何恢复、结果如何被追踪。Apple WWDC 的系统级 AI 入口、NN/g 对 AI 设计岗位的拆分，以及设计系统报告都指向同一件事：未来设计师和 PM 要设计人、AI、系统之间的职责分配。",
           tag: "AI 工作流",
           readTime: "10 分钟阅读",
           date: "2026年6月10日 周三",
           isoDate: "2026-06-10",
-          detail: "AI 可以很好地完成结构化整理、场景穷举、文案润色和竞品调研摘要。但优先级取舍、利益相关方博弈、真实用户动机识别仍然需要产品负责人判断。本文关注如何让 AI 成为 PRD 生产流程中的辅助系统，而不是替代决策。"
+          detail: "AI 产品设计正在从页面体验扩展到代理式行动边界，产品与设计需要共同定义权限、确认、追踪、恢复和治理机制。",
+          contentMarkdown: `# 趋势
+## 从 UX 到 AX：设计对象正在从页面体验扩展为 AI 代理的行动边界
+趋势判断：今天最值得关注的不是某一个新控件或新视觉风格，而是体验设计对象的变化。过去 UX 主要关注用户如何在界面中完成任务；现在 AI Agent、系统级 Siri、自然语言自动化和设计系统 MCP 正在让软件具备“代替用户执行”的能力。设计师和产品经理要开始定义 AI 代理的行动边界：系统可以做什么、必须询问什么、何时展示依据、如何恢复错误、如何留下审计记录。
+适用场景：这个趋势特别适用于 B 端工作流、AI 助手、客服/运营/销售自动化、个人知识管理、设计到代码工作流、系统级移动入口。它也适用于个人门户和作品集：未来作品集不只是展示界面结果，还应展示你如何定义用户目标、AI 协作边界、异常处理和长期可维护的系统结构。
+潜在误区：不要把 AX 理解成“让 AI 替用户点按钮”或“把所有入口都做成聊天框”。代理式体验最重要的是责任分配和可控性。如果系统没有权限边界、确认机制、失败恢复和可解释反馈，自动化越强，用户风险越高。
+# 深度文章 / 报告分析
+## 1. Nielsen Norman Group｜The Four Design Jobs AI Created (So Far)
+来源类型：深度文章
+来源：[https://www.nngroup.com/articles/design-jobs-ai-created/](https://www.nngroup.com/articles/design-jobs-ai-created/)
+核心观点：NN/g 将“AI 设计”拆成了更具体的几类工作，而不是把所有事情都混在一个模糊标签里。文章的重要价值在于，它提醒团队区分：设计 AI 产品、使用 AI 辅助设计、设计 AI 生成的结果、以及围绕 AI 系统建立治理和体验保障。这种拆分比“设计师会不会被 AI 替代”更有操作性。
+产品策略与协作意义：对 PM 来说，这篇文章可以直接用于拆需求边界。AI 功能不只是一个 feature，它通常需要同时包含产品能力、模型能力、界面控制、内容质量、风险治理和用户教育。需求评审时应该问：这是一个用户可见的 AI 产品能力，还是内部设计流程提效？它需要怎样的人机确认？上线后谁负责质量监控？
+UI/UX 启发：设计师需要从单屏 UI 思维转向“体验控制台”思维。AI 能力越强，界面越需要提供方向盘、刹车和仪表盘：用户能否知道系统做了什么、能否调整目标、能否撤销、能否看到依据。信息架构上，AI 相关功能不应只有输入框和结果区，还要有任务状态、上下文来源、权限说明、历史记录和反馈入口。
+落地方式：个人门户可以增加“AI 工作流设计”专题，把晨读自动化、Notion CMS、GitHub Pages 同步这些流程画成服务蓝图，展示自己对 AX 的理解。B 端产品可以为每个 AI 功能补一张责任边界表：用户负责什么、AI 负责什么、系统负责什么、管理员负责什么。AI 工作流中则可建立输出质量检查清单，避免只看生成速度。
+误区边界：不要把岗位拆分当作组织层面的机械分工。小团队不一定需要新增岗位，但必须补齐这些能力。真正危险的是团队以为“接入模型”就完成了 AI 产品设计，忽略了可控性、异常状态和长期治理。
+## 2. zeroheight｜Design Systems Report 2026
+来源类型：行业报告
+来源：[https://report.zeroheight.com/](https://report.zeroheight.com/)
+核心观点：zeroheight 的第五年度设计系统报告基于 147 位设计系统从业者，关注设计系统在不同规模组织中的真实状态。它传递出的关键信号是：设计系统正在从“组件库和规范文档”升级为产品组织的协作基础设施，尤其在 AI 工作流里，设计系统的结构化程度会直接影响生成结果的一致性和可用性。
+产品策略与协作意义：对产品经理而言，设计系统不再只是设计团队内部资产，而是影响交付效率、体验一致性和需求复用的产品能力。需求如果每次都从零描述页面，会浪费大量沟通成本；如果需求能复用成熟模式，例如表格、筛选、空状态、权限提示、批量操作、审批流，研发和 AI Agent 都能更稳定地执行。
+UI/UX 启发：设计系统需要补足“语义层”。仅有按钮、颜色、字号不够，团队还需要定义组件使用场景、禁用规则、错误状态、可访问性要求、数据密度和跨端适配。AI 时代尤其需要清晰命名和状态说明，因为 AI 工具会读取这些上下文并生成代码或界面建议。
+落地方式：个人网站可以把现有 CMS 字段、文章卡片、工具导航、晨读列表做成轻量设计系统说明，记录标题、摘要、标签、来源数量、是否最新等字段的显示规则。B 端产品可以优先整理高频复杂组件，例如数据表格、筛选器、详情抽屉、批量操作栏、权限空状态。设计到代码工作流中，应把 Figma 组件、代码组件和业务规则建立映射。
+误区边界：不要把设计系统建设成静态文档仓库。报告的现实意义在于提醒团队：设计系统必须被使用、被维护、被度量。若没有所有权、更新机制和工程映射，再漂亮的规范也无法支撑 AI 工作流。
+## 3. Designer Fund｜AI in Design 2026: The inflection point is here
+来源类型：行业报告 / 趋势文章
+来源：[https://designerfund.com/blog/ai-in-design-2026](https://designerfund.com/blog/ai-in-design-2026)
+核心观点：Designer Fund 的 2026 AI in Design 报告强调一个更细腻的变化：AI 并没有简单让设计工作消失，而是让设计师承担更多端到端责任，从探索、原型、内容、交付到跨职能沟通都被重新组织。设计师“拥有更多、交付更多”，但这也要求更强的判断力和流程能力。
+产品策略与协作意义：PM 需要重新看待设计参与的时机。过去设计可能在需求明确后进入，现在设计师可以更早参与问题定义、机会探索、快速原型和用户反馈整理。AI 加速初稿后，评审瓶颈会转移到“判断什么值得做”和“如何保证质量”。这会让产品和设计的边界更融合，但也要求团队明确决策权和验收标准。
+UI/UX 启发：AI 带来的不是单纯提速，而是设计过程的压缩与放大。压缩的是出图、改文案、做变体的时间；放大的是信息架构、交互逻辑、品牌一致性、可访问性和风险控制的重要性。设计师必须能把隐性品味转成可复用规则，否则 AI 只会放大模糊表达。
+落地方式：作品集可以从“展示成品图”升级为“展示如何用 AI 扩展设计影响力”：例如如何用 AI 整理研究材料、生成探索方向、验证文案、同步 CMS、检查一致性。B 端产品团队可以将 AI 放入产品设计流程的低风险环节，如需求归类、竞品表格、原型文案、状态枚举、设计评审纪要，而不是一开始就让 AI 决定核心方案。
+误区边界：不要用 AI 产出数量衡量设计成熟度。真正的成熟度是：问题定义是否更清晰、评审是否更快、上线质量是否更稳定、跨团队误解是否减少。如果 AI 只是制造更多半成品，团队反而会进入评审疲劳。
+# 资讯 / 动态观察
+## 4. Apple｜WWDC26 发布 Siri AI、下一代 Apple Intelligence 与 iOS 27 系列更新
+来源类型：重大产品发布 / 平台动态
+来源：[https://www.apple.com/newsroom/2026/06/apple-unveils-next-generation-of-apple-intelligence-siri-ai-and-more/](https://www.apple.com/newsroom/2026/06/apple-unveils-next-generation-of-apple-intelligence-siri-ai-and-more/)
+事件是什么：Apple 在 2026-06-08 的 WWDC26 上发布下一代 Apple Intelligence、全新的 Siri AI、家长控制能力和一系列系统软件改进。多家媒体同时报道 iOS 27 更强调速度、稳定性、可用性和系统级 AI 能力，而不是大规模视觉改版。
+为什么值得今天关注：这是系统级 AI 入口的重要节点。相比独立 AI App，Apple 的优势在于把 AI 放入 OS、相册、相机、Safari、快捷指令、家长控制等高频场景。对 PM 和设计师来说，这意味着 AI 体验会更接近基础设施，而不是单独功能页。
+可能影响的判断：移动端产品需要重新考虑系统级 AI 能力会替代哪些应用内流程。例如搜索、自动化、内容理解、快捷操作、视觉识别、家长控制和隐私授权，都可能逐步被 OS 层吸收。设计上要关注系统规范、隐私提示、跨 App 意图传递和确认机制。
+是否值得后续跟踪：值得。重点观察 Siri AI 的真实可用性、第三方 App 接入能力、快捷指令自然语言化的稳定性，以及 Apple 隐私架构是否会成为其他平台的设计压力。
+## 5. Figma Release Notes｜Check designs: catch what's off, ship what's right
+来源类型：设计工具更新 / 设计系统动态
+来源：[https://www.figma.com/release-notes/](https://www.figma.com/release-notes/)
+事件是什么：Figma 在 2026-06-04 的 release notes 中发布了 “Check designs: catch what's off, ship what's right”，面向设计和设计系统场景，帮助团队在交付前发现设计中的不一致或异常。
+为什么值得今天关注：这类能力说明设计工具正在从“画布工具”变成“质量治理工具”。当 AI 和多人协作让设计产出变多，团队更需要自动检查组件、变量、样式、状态和规范偏差，避免低质量交付进入研发。
+可能影响的判断：设计评审会从纯人工肉眼检查，转向自动检查 + 人工判断的组合。设计系统团队应把规范做得更结构化，因为只有规则清楚，工具才能检查。PM 也可以把设计检查结果纳入需求交付质量的一部分，而不是等到研发阶段才发现体验不一致。
+是否值得后续跟踪：值得。重点看它能否和设计系统变量、Dev Mode、MCP、Code Connect 形成闭环。如果检查结果能进入研发和 AI 代码生成流程，它会明显提升设计到代码的一致性。`
         },
         {
           weekday: "THU",
           poster: readingAssets.thursday,
           title: "周四晨读｜B 端页面的信息密度",
+          listSummary: "B 端页面的信息密度，应该由决策频率、数据关系和错误成本共同决定，而不是简单追求留白或压缩。",
           summary: "今日晨读：在效率、可读性和业务复杂度之间找到稳定的界面尺度。",
+          trendTitle: "从视觉简洁到任务效率：B 端页面需要重新定义信息密度",
+          trendSummary: "B 端用户常常需要在同一屏完成比较、判断和批量处理。合理的信息密度不是把页面塞满，而是保留关键上下文、稳定扫描路径，并让高频决策更快发生。",
           tag: "B 端体验",
           readTime: "7 分钟阅读",
           date: "2026年6月11日 周四",
           isoDate: "2026-06-11",
-          detail: "B 端页面信息密度过低会让用户频繁翻页，过高则造成认知负担。本文提出用「决策频率」和「数据关系复杂度」两个维度评估页面应该呈现多少信息，并给出列表、详情和看板场景中的取舍方法。"
+          detail: "B 端页面信息密度过低会让用户频繁翻页，过高则造成认知负担。本文提出用「决策频率」和「数据关系复杂度」两个维度评估页面应该呈现多少信息，并给出列表、详情和看板场景中的取舍方法。",
+          sections: [
+            {
+              title: "判断维度",
+              body: "B 端页面的信息密度不能单纯按“简洁”或“丰富”判断，而要看用户是否需要在同一屏完成比较、筛选和决策。",
+              items: [
+                "决策频率越高，越需要减少跳转和重复展开。",
+                "数据关系越复杂，越需要保留上下文和字段之间的关联。",
+                "错误成本越高，越需要把关键状态、限制和风险提示前置。"
+              ]
+            },
+            {
+              title: "列表场景",
+              body: "列表不是展示所有字段，而是服务于筛选、比较和下一步动作。",
+              items: [
+                "高频比较字段应该前置，低频解释字段可以进入详情页。",
+                "状态、负责人、时间和风险字段通常比描述性文案更重要。",
+                "批量操作场景需要稳定列宽和清晰的选择反馈，避免操作错位。"
+              ]
+            },
+            {
+              title: "详情场景",
+              body: "详情页应该围绕用户下一步行动组织信息，而不是按数据库字段顺序堆叠。",
+              items: [
+                "基础信息、当前状态、操作记录和关联对象要有明确层级。",
+                "风险信息和不可逆操作需要更靠近用户决策点。",
+                "长表单需要分组、锚点和保存反馈，减少用户迷失。"
+              ]
+            },
+            {
+              title: "设计边界",
+              body: "信息密度提升不等于视觉压缩，真正要控制的是扫描成本。",
+              items: [
+                "减少无意义留白，但保留分组间距和视觉锚点。",
+                "不要用过多卡片拆碎强关联信息，必要时使用表格、分组和固定列。",
+                "移动端应优先保留关键动作和状态，复杂比较回到桌面端完成。"
+              ]
+            }
+          ]
         },
         {
           weekday: "FRI",
           poster: readingAssets.friday,
           title: "周五晨读｜把个人门户当成产品来迭代",
+          listSummary: "个人门户可以像产品一样持续迭代：定位、作品、文章、导航和联系转化都需要被设计和维护。",
           summary: "今日晨读：把个人主页拆成定位、作品、文章、导航和联系转化五个可持续迭代的模块。",
+          trendTitle: "从静态简历到个人产品：门户网站需要建立内容和转化闭环",
+          trendSummary: "当个人主页承担面试、合作、作品展示和知识沉淀等多重任务时，它就不再只是一个页面，而是一个可持续运营的产品。内容结构、公开边界和访问反馈都应该进入迭代流程。",
           tag: "个人门户",
           readTime: "9 分钟阅读",
           date: "2026年6月12日 周五",
           isoDate: "2026-06-12",
-          detail: "个人门户不应该只是静态简历，而可以像产品一样持续迭代。本文从信息架构、内容更新、公开与受控资料边界、数据埋点和联系转化五个角度，整理个人门户的长期维护方式。"
+          detail: "个人门户不应该只是静态简历，而可以像产品一样持续迭代。本文从信息架构、内容更新、公开与受控资料边界、数据埋点和联系转化五个角度，整理个人门户的长期维护方式。",
+          sections: [
+            {
+              title: "产品定位",
+              body: "个人门户不是简历的网页版，而是一个持续表达专业定位、项目能力和协作方式的公开产品。",
+              items: [
+                "首页解决“你是谁、擅长什么、适合什么合作”的第一印象问题。",
+                "作品解决“你做过什么、如何判断、结果如何”的可信度问题。",
+                "文章解决“你如何思考、如何沉淀、是否能持续输出”的长期信任问题。"
+              ]
+            },
+            {
+              title: "信息架构",
+              body: "门户结构需要兼顾快速浏览和深度查看，避免所有内容都堆在首页。",
+              items: [
+                "首页只放定位和最关键行动入口。",
+                "作品列表负责筛选和预览，详情页负责完整说明。",
+                "文章列表负责主题触达，详情页负责承载结构化分析。",
+                "导航页负责保留常用资源，不干扰主线表达。"
+              ]
+            },
+            {
+              title: "公开与受控边界",
+              body: "个人门户发布到公网后，内容边界比展示完整度更重要。",
+              items: [
+                "公开层展示脱敏案例、方法和能力，不直接放敏感数据和未授权截图。",
+                "受控层可通过私密链接、PDF 或沟通后发送，用于面试和深度合作。",
+                "每次新增作品前，都要检查项目来源、数据口径和授权风险。"
+              ]
+            },
+            {
+              title: "长期迭代",
+              body: "把个人门户当成产品维护，需要有内容节奏、访问反馈和版本记录。",
+              items: [
+                "每月更新一到两个作品或文章，保持内容新鲜度。",
+                "通过访问数据观察首页 CTA、作品点击和文章阅读情况。",
+                "将站点变更记录到 PRD 和交互文档，避免原型和说明长期脱节。"
+              ]
+            }
+          ]
         }
       ];
 
@@ -1510,25 +1823,120 @@
       const articleDetailContent = document.getElementById("articleDetailContent");
       let lastBlogFocused = null;
 
+      function escapeHtml(value = "") {
+        return String(value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function renderSafeTagList(tags = []) {
+        return tags.map(tag => `<span>${escapeHtml(tag)}</span>`).join("");
+      }
+
+      function markdownToHtml(markdown = "") {
+        const lines = markdown.split(/\r?\n/);
+        const html = [];
+        let listType = null;
+
+        const closeList = () => {
+          if (!listType) return;
+          html.push(`</${listType}>`);
+          listType = null;
+        };
+
+        const inline = text => escapeHtml(text).replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+
+        lines.forEach(line => {
+          const trimmed = line.trim();
+          if (!trimmed) {
+            closeList();
+            return;
+          }
+
+          if (trimmed.startsWith("### ")) {
+            closeList();
+            html.push(`<h4>${inline(trimmed.slice(4))}</h4>`);
+            return;
+          }
+
+          if (trimmed.startsWith("## ")) {
+            closeList();
+            html.push(`<h4>${inline(trimmed.slice(3))}</h4>`);
+            return;
+          }
+
+          if (trimmed.startsWith("# ")) {
+            closeList();
+            html.push(`<h3>${inline(trimmed.slice(2))}</h3>`);
+            return;
+          }
+
+          if (/^- /.test(trimmed)) {
+            if (listType !== "ul") {
+              closeList();
+              listType = "ul";
+              html.push("<ul>");
+            }
+            html.push(`<li>${inline(trimmed.slice(2))}</li>`);
+            return;
+          }
+
+          if (/^\d+\. /.test(trimmed)) {
+            if (listType !== "ol") {
+              closeList();
+              listType = "ol";
+              html.push("<ol>");
+            }
+            html.push(`<li>${inline(trimmed.replace(/^\d+\. /, ""))}</li>`);
+            return;
+          }
+
+          closeList();
+          html.push(`<p>${inline(trimmed)}</p>`);
+        });
+
+        closeList();
+        return `<div class="article-rich-content">${html.join("")}</div>`;
+      }
+
+      function renderArticleSections(sections = []) {
+        return sections.map(section => `
+          <section class="detail-section">
+            <h3>${escapeHtml(section.title)}</h3>
+            ${section.body ? `<p>${escapeHtml(section.body)}</p>` : ""}
+            ${section.items?.length ? `
+              <ul>
+                ${section.items.map(text => `<li>${escapeHtml(text)}</li>`).join("")}
+              </ul>
+            ` : ""}
+          </section>
+        `).join("");
+      }
+
       function renderArticleDetail(post) {
+        const tags = [post.tag, post.readTime];
+        const mainContent = post.contentMarkdown
+          ? markdownToHtml(post.contentMarkdown)
+          : `<div class="detail-grid">${renderArticleSections(post.sections || [
+              { title: "详细分析", items: [post.detail] }
+            ])}</div>`;
+        const trendTitle = post.trendTitle || post.title;
+        const trendSummary = post.trendSummary || post.detail;
+
         return `
-          <div class="drawer-tags">
-            <span>${post.tag}</span>
-            <span>${post.readTime}</span>
-            <span>${post.date}</span>
-          </div>
-          <div class="detail-grid">
-            <section class="detail-section">
-              <h3>今日晨读</h3>
-              <ul>
-                <li>${post.summary}</li>
-              </ul>
+          <div class="drawer-tags">${renderSafeTagList(tags)}</div>
+          <div class="article-detail-content">
+            <section class="detail-section article-summary article-description">
+              <h3>描述</h3>
+              <p><strong>趋势标题</strong>${escapeHtml(trendTitle)}</p>
+              <p><strong>趋势摘要</strong>${escapeHtml(trendSummary)}</p>
             </section>
-            <section class="detail-section">
-              <h3>本篇内容</h3>
-              <ul>
-                <li>${post.detail}</li>
-              </ul>
+            <section class="article-detail-block" aria-label="详细内容">
+              <h3 class="article-detail-heading">详细内容</h3>
+              ${mainContent}
             </section>
           </div>
         `;
@@ -1538,9 +1946,9 @@
         lastBlogFocused = document.activeElement;
         articleDetailType.textContent = post.tag;
         articleDetailLabel.textContent = post.tag;
-        articleDetailTitle.textContent = post.title;
-        articleDetailBody.textContent = post.summary;
-        articleDetailMeta.textContent = `${post.date} · ${post.readTime}`;
+        articleDetailTitle.textContent = post.listSummary || post.summary;
+        articleDetailBody.textContent = post.trendTitle || post.title;
+        articleDetailMeta.textContent = post.date;
         articleDetailContent.innerHTML = renderArticleDetail(post);
         showView("article-detail");
         stage.scrollTo({ top: 0, behavior: "smooth" });
