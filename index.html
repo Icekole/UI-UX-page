@@ -375,7 +375,7 @@
       }
 
       /* ── Portfolio cards ── */
-      .portfolio-view, .portfolio-detail-view, .blog-view, .resources-view {
+      .portfolio-view, .portfolio-detail-view, .blog-view, .article-detail-view, .resources-view {
         align-content: start;
       }
 
@@ -513,7 +513,13 @@
       }
 
       /* ── Blog & Resource list ── */
-      .blog-list, .resource-list {
+      .blog-list {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .resource-list {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 16px;
@@ -547,135 +553,68 @@
       .row-card h3 { margin-bottom: 10px; font-size: 20px; }
       .row-card p { color: var(--muted); line-height: 1.65; }
 
-      /* ── 晨读内容 ── */
-      .reading-layout {
+      .reading-card {
         display: grid;
-        grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.92fr);
-        gap: 18px;
+        grid-template-columns: minmax(188px, 34%) 1fr;
+        min-height: 218px;
+        padding: 0;
+        overflow: hidden;
       }
 
-      .reading-featured,
-      .reading-history {
-        min-height: 280px;
-        padding: 24px;
-        border: 1px solid var(--line);
-        background: var(--panel);
-        backdrop-filter: blur(8px);
-        clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%);
+      .reading-poster {
+        position: relative;
+        min-height: 218px;
+        overflow: hidden;
+        border-right: 1px solid var(--line);
+        background: var(--panel-strong);
+      }
+
+      .reading-poster img {
+        width: 100%;
+        height: 100%;
+        min-height: 218px;
+        display: block;
+        object-fit: cover;
+        object-position: center;
+        transition: transform 220ms ease;
+      }
+
+      .reading-card:hover .reading-poster img {
+        transform: scale(1.03);
+      }
+
+      .reading-copy {
+        display: flex;
+        min-height: 218px;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 26px;
+      }
+
+      .reading-copy h3 {
+        max-width: 720px;
+        margin: 0;
+        font-size: 22px;
+        line-height: 32px;
+        font-weight: 600;
       }
 
       .reading-date {
         display: inline-flex;
-        margin-bottom: 16px;
-        color: var(--acid);
-        font-size: 12px;
-        font-weight: 700;
-        line-height: 18px;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-      }
-
-      .reading-featured h3 {
-        margin-bottom: 14px;
-        font-size: 24px;
-        line-height: 32px;
-      }
-
-      .reading-featured p,
-      .reading-history p {
-        color: var(--muted);
-        line-height: 1.7;
-      }
-
-      .reading-actions {
-        display: flex;
-        flex-wrap: wrap;
+        width: fit-content;
+        align-items: center;
         gap: 10px;
-        margin-top: 22px;
-      }
-
-      .reading-history {
-        display: grid;
-        align-content: start;
-        gap: 12px;
-      }
-
-      .reading-list {
-        display: grid;
-        gap: 10px;
-      }
-
-      .reading-item {
-        width: 100%;
-        padding: 14px 0;
-        border: 0;
-        border-top: 1px solid var(--line);
-        color: var(--text);
-        background: transparent;
-        cursor: pointer;
-        text-align: left;
-        font: inherit;
-      }
-
-      .reading-item:hover h4 {
-        color: var(--cyan);
-      }
-
-      .reading-item h4 {
-        margin-bottom: 6px;
-        font-size: 15px;
-        line-height: 22px;
-        transition: color 160ms ease;
-      }
-
-      .reading-item span {
-        color: var(--faint);
-        font-size: 12px;
-        line-height: 18px;
-      }
-
-      .reading-status {
-        color: var(--faint);
+        color: var(--warm);
         font-size: 13px;
         line-height: 20px;
       }
 
-      .reading-content {
-        display: grid;
-        gap: 12px;
-        margin-top: 18px;
-        color: var(--muted);
-        line-height: 1.7;
-      }
-
-      .reading-content h3 {
-        margin-top: 10px;
-        color: var(--text);
-        font-size: 18px;
-        line-height: 26px;
-      }
-
-      .reading-content h4 {
-        margin-top: 8px;
-        color: var(--warm);
-        font-size: 15px;
-        line-height: 22px;
-      }
-
-      .reading-content ul,
-      .reading-content ol {
-        margin: 0;
-        padding-left: 20px;
-      }
-
-      .reading-content a {
-        color: var(--cyan);
-        text-decoration: underline;
-        text-underline-offset: 3px;
-      }
-
-      .blog-view .blog-list {
-        margin-top: 18px;
+      .reading-date::before {
+        content: "";
+        width: 34px;
+        height: 1px;
+        background: color-mix(in srgb, var(--warm) 68%, transparent);
       }
 
       /* ── Drawer ── */
@@ -823,8 +762,9 @@
         line-height: 18px;
       }
 
-      /* ── Portfolio detail page ── */
-      .portfolio-detail-view {
+      /* ── Detail pages ── */
+      .portfolio-detail-view,
+      .article-detail-view {
         gap: 24px;
       }
 
@@ -901,15 +841,18 @@
         line-height: 1.7;
       }
 
-      .portfolio-detail-view .drawer-tags {
+      .portfolio-detail-view .drawer-tags,
+      .article-detail-view .drawer-tags {
         margin-top: 0;
       }
 
-      .portfolio-detail-view .drawer-visual {
+      .portfolio-detail-view .drawer-visual,
+      .article-detail-view .drawer-visual {
         margin: 18px 0 0;
       }
 
-      .portfolio-detail-view .drawer-visual img {
+      .portfolio-detail-view .drawer-visual img,
+      .article-detail-view .drawer-visual img {
         max-height: 560px;
       }
 
@@ -948,14 +891,30 @@
         }
 
         .cards,
-        .blog-list,
-        .reading-layout,
         .resource-list,
         .ability-strip {
           grid-template-columns: 1fr;
         }
 
         .case-cover { height: 190px; }
+        .reading-card {
+          grid-template-columns: 1fr;
+        }
+
+        .reading-poster {
+          min-height: 180px;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .reading-poster img {
+          min-height: 180px;
+        }
+
+        .reading-copy {
+          min-height: 188px;
+        }
+
         .detail-hero {
           grid-template-columns: 1fr;
         }
@@ -1082,21 +1041,32 @@
           <div class="section-head">
             <div>
               <h2 class="section-title">文章</h2>
-              <p>沉淀产品转型、设计复盘、AI 工作流和知识管理，并同步 Notion CMS 中已发布的每日 UI/产品前沿晨读。</p>
+              <p>固定展示周一至周五的今日晨读封面，沉淀产品转型、设计复盘、AI 工作流和知识管理。</p>
             </div>
           </div>
-          <div class="reading-layout" aria-live="polite">
-            <article class="reading-featured" id="latestReading">
-              <p class="reading-status">正在读取晨读内容...</p>
-            </article>
-            <aside class="reading-history">
-              <div>
-                <h3>晨读历史</h3>
-                <p>按日期倒序展示已发布晨读。</p>
-              </div>
-              <div class="reading-list" id="readingList"></div>
-            </aside>
+          <div class="blog-list" id="blogList"></div>
+        </section>
+
+        <!-- 文章详情二级页面 -->
+        <section class="view article-detail-view" data-panel="article-detail" aria-live="polite">
+          <div class="detail-backbar">
+            <button class="pill" id="backToBlog">返回文章</button>
+            <span class="tag" id="articleDetailType">文章详情</span>
           </div>
+          <article class="detail-page" id="articleDetailPage">
+            <div class="detail-hero">
+              <div>
+                <small class="detail-kicker" id="articleDetailLabel"></small>
+                <h2 class="detail-title" id="articleDetailTitle"></h2>
+                <p class="detail-summary" id="articleDetailBody"></p>
+              </div>
+              <aside class="detail-side">
+                <strong>阅读信息</strong>
+                <p id="articleDetailMeta"></p>
+              </aside>
+            </div>
+            <div id="articleDetailContent"></div>
+          </article>
         </section>
 
         <!-- 工具箱 -->
@@ -1119,7 +1089,7 @@
       </section>
     </main>
 
-    <!-- 文章与联系抽屉 -->
+    <!-- 联系抽屉 -->
     <div class="drawer" id="detailDrawer" aria-hidden="true">
       <div class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
         <h2 id="drawerTitle"></h2>
@@ -1140,6 +1110,14 @@
         portalProblem: "assets/portfolio/portal-problem.png",
         wuhanSakura: "assets/portfolio/wuhan-sakura.png",
         admissionDashboard: "assets/portfolio/admission-dashboard.png"
+      };
+
+      const readingAssets = {
+        monday: "assets/reading/monday.png",
+        tuesday: "assets/reading/tuesday.png",
+        wednesday: "assets/reading/wednesday.png",
+        thursday: "assets/reading/thursday.png",
+        friday: "assets/reading/friday.png"
       };
 
       const cases = [
@@ -1291,14 +1269,90 @@
         }
       ];
 
-      const readingEndpoints = {
-        latest: "content/readings/latest.json",
-        index: "content/readings/index.json"
-      };
+      const blogPosts = [
+        {
+          weekday: "MON",
+          poster: readingAssets.monday,
+          title: "周一晨读｜从设计评审到产品决策",
+          summary: "今日晨读：用一次设计评审复盘，拆解如何从界面争议回到业务目标、指标定义与协作机制。",
+          tag: "产品方法",
+          readTime: "8 分钟阅读",
+          date: "2026年6月8日 周一",
+          isoDate: "2026-06-08",
+          detail: "起点是一次例行设计评审，开发质疑按钮位置的合理性。而深入讨论后我们发现，真正的问题是业务目标不清晰。本文记录如何从一个界面细节反推到指标定义、需求优先级和跨角色协作规则。"
+        },
+        {
+          weekday: "TUE",
+          poster: readingAssets.tuesday,
+          title: "周二晨读｜如何整理一个可复用的作品模板",
+          summary: "今日晨读：把作品从「看图」升级为「看判断」，让项目表达更适合产品岗位和合作沟通。",
+          tag: "作品表达",
+          readTime: "6 分钟阅读",
+          date: "2026年6月9日 周二",
+          isoDate: "2026-06-09",
+          detail: "产品岗位作品表达与设计岗位的核心差异在于：前者需要展示判断力，而不只是视觉执行力。本文介绍如何用「背景、问题、方案、结果」四段式结构重新组织案例，让访客更快理解你的角色、取舍和结果。"
+        },
+        {
+          weekday: "WED",
+          poster: readingAssets.wednesday,
+          title: "周三晨读｜AI 辅助 PRD 的边界",
+          summary: "今日晨读：梳理 AI 能提升效率的环节，以及产品负责人必须自己完成的判断。",
+          tag: "AI 工作流",
+          readTime: "10 分钟阅读",
+          date: "2026年6月10日 周三",
+          isoDate: "2026-06-10",
+          detail: "AI 可以很好地完成结构化整理、场景穷举、文案润色和竞品调研摘要。但优先级取舍、利益相关方博弈、真实用户动机识别仍然需要产品负责人判断。本文关注如何让 AI 成为 PRD 生产流程中的辅助系统，而不是替代决策。"
+        },
+        {
+          weekday: "THU",
+          poster: readingAssets.thursday,
+          title: "周四晨读｜B 端页面的信息密度",
+          summary: "今日晨读：在效率、可读性和业务复杂度之间找到稳定的界面尺度。",
+          tag: "B 端体验",
+          readTime: "7 分钟阅读",
+          date: "2026年6月11日 周四",
+          isoDate: "2026-06-11",
+          detail: "B 端页面信息密度过低会让用户频繁翻页，过高则造成认知负担。本文提出用「决策频率」和「数据关系复杂度」两个维度评估页面应该呈现多少信息，并给出列表、详情和看板场景中的取舍方法。"
+        },
+        {
+          weekday: "FRI",
+          poster: readingAssets.friday,
+          title: "周五晨读｜把个人门户当成产品来迭代",
+          summary: "今日晨读：把个人主页拆成定位、作品、文章、导航和联系转化五个可持续迭代的模块。",
+          tag: "个人门户",
+          readTime: "9 分钟阅读",
+          date: "2026年6月12日 周五",
+          isoDate: "2026-06-12",
+          detail: "个人门户不应该只是静态简历，而可以像产品一样持续迭代。本文从信息架构、内容更新、公开与受控资料边界、数据埋点和联系转化五个角度，整理个人门户的长期维护方式。"
+        }
+      ];
 
-      const toolEndpoint = "content/tools/index.json";
-      const defaultResourceGroups = { design: [], product: [], ai: [], dev: [] };
-      let resourceGroups = { ...defaultResourceGroups };
+      const resources = {
+        design: [
+          { name: "Figma", desc: "设计协作、原型和组件库", url: "https://figma.com" },
+          { name: "Mobbin", desc: "移动端产品界面参考", url: "https://mobbin.com" },
+          { name: "Dribbble", desc: "视觉灵感和作品发布", url: "https://dribbble.com" },
+          { name: "IconFont", desc: "中文图标资源库", url: "https://www.iconfont.cn" }
+        ],
+        product: [
+          { name: "Notion", desc: "需求、知识库和项目整理", url: "https://notion.so" },
+          { name: "Linear", desc: "任务流转和缺陷跟踪", url: "https://linear.app" },
+          { name: "Google Analytics", desc: "基础访问与转化分析", url: "https://analytics.google.com" },
+          { name: "飞书文档", desc: "团队协作和 PRD 维护", url: "https://feishu.cn" }
+        ],
+        ai: [
+          { name: "ChatGPT", desc: "需求分析、原型思考和文本整理", url: "https://chat.openai.com" },
+          { name: "Perplexity", desc: "资料检索和竞品研究", url: "https://perplexity.ai" },
+          { name: "Midjourney", desc: "视觉概念探索", url: "https://midjourney.com" },
+          { name: "Cursor", desc: "代码辅助和原型开发", url: "https://cursor.sh" }
+        ],
+        dev: [
+          { name: "GitHub", desc: "代码仓库与发布流程", url: "https://github.com" },
+          { name: "Vercel", desc: "前端部署与预览", url: "https://vercel.com" },
+          { name: "MDN", desc: "Web 标准查询", url: "https://developer.mozilla.org" },
+          { name: "Tailwind CSS", desc: "界面样式快速构建", url: "https://tailwindcss.com" }
+        ]
+      };
 
       /* ── 视图切换 ── */
       const panels = document.querySelectorAll("[data-panel]");
@@ -1306,7 +1360,11 @@
 
       function showView(name) {
         panels.forEach(p => p.classList.toggle("active", p.dataset.panel === name));
-        const activeNav = name === "portfolio-detail" ? "portfolio" : name;
+        const activeNavMap = {
+          "portfolio-detail": "portfolio",
+          "article-detail": "blog"
+        };
+        const activeNav = activeNavMap[name] || name;
         navButtons.forEach(b => b.classList.toggle("active", b.dataset.view === activeNav));
       }
 
@@ -1441,181 +1499,99 @@
         });
       });
 
-      /* ── 晨读 CMS 数据 ── */
-      const latestReading = document.getElementById("latestReading");
-      const readingList = document.getElementById("readingList");
+      /* ── 文章 ── */
+      const blogList = document.getElementById("blogList");
+      const backToBlogBtn = document.getElementById("backToBlog");
+      const articleDetailType = document.getElementById("articleDetailType");
+      const articleDetailLabel = document.getElementById("articleDetailLabel");
+      const articleDetailTitle = document.getElementById("articleDetailTitle");
+      const articleDetailBody = document.getElementById("articleDetailBody");
+      const articleDetailMeta = document.getElementById("articleDetailMeta");
+      const articleDetailContent = document.getElementById("articleDetailContent");
+      let lastBlogFocused = null;
 
-      function escapeHtml(value = "") {
-        return String(value)
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;")
-          .replace(/'/g, "&#039;");
-      }
-
-      function formatReadingDate(date) {
-        if (!date) return "未设置日期";
-        return new Intl.DateTimeFormat("zh-CN", { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(`${date}T00:00:00+08:00`));
-      }
-
-      function renderReadingTags(tags = []) {
-        return tags.map(tag => `<span>${escapeHtml(tag)}</span>`).join("");
-      }
-
-      function markdownToHtml(markdown = "") {
-        const lines = markdown.split(/\r?\n/);
-        const html = [];
-        let listType = null;
-
-        const closeList = () => {
-          if (!listType) return;
-          html.push(`</${listType}>`);
-          listType = null;
-        };
-
-        const inline = text => escapeHtml(text).replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
-
-        lines.forEach(line => {
-          const trimmed = line.trim();
-          if (!trimmed) {
-            closeList();
-            return;
-          }
-
-          if (trimmed.startsWith("## ")) {
-            closeList();
-            html.push(`<h3>${inline(trimmed.slice(3))}</h3>`);
-            return;
-          }
-
-          if (trimmed.startsWith("### ")) {
-            closeList();
-            html.push(`<h4>${inline(trimmed.slice(4))}</h4>`);
-            return;
-          }
-
-          if (/^- /.test(trimmed)) {
-            if (listType !== "ul") {
-              closeList();
-              listType = "ul";
-              html.push("<ul>");
-            }
-            html.push(`<li>${inline(trimmed.slice(2))}</li>`);
-            return;
-          }
-
-          if (/^\d+\. /.test(trimmed)) {
-            if (listType !== "ol") {
-              closeList();
-              listType = "ol";
-              html.push("<ol>");
-            }
-            html.push(`<li>${inline(trimmed.replace(/^\d+\. /, ""))}</li>`);
-            return;
-          }
-
-          closeList();
-          html.push(`<p>${inline(trimmed)}</p>`);
-        });
-
-        closeList();
-        return `<div class="reading-content">${html.join("")}</div>`;
-      }
-
-      function openReading(reading) {
-        openDrawer({
-          title: reading.title,
-          body: reading.trend?.summary || reading.summary || "",
-          extra: `
-            <div class="drawer-tags">${renderReadingTags(reading.tags)}</div>
-            <p style="margin-top:14px;color:var(--faint);font-size:12px;">${formatReadingDate(reading.date)} · ${reading.sourcesCount || 0} 个来源</p>
-            ${markdownToHtml(reading.contentMarkdown || "")}
-          `
-        });
-      }
-
-      function renderLatestReading(reading) {
-        if (!reading) {
-          latestReading.innerHTML = '<p class="reading-status">暂无已发布晨读。</p>';
-          return;
-        }
-
-        latestReading.innerHTML = `
-          <span class="reading-date">${formatReadingDate(reading.date)}</span>
-          <h3>${escapeHtml(reading.trend?.title || reading.title)}</h3>
-          <p>${escapeHtml(reading.trend?.summary || reading.summary || "")}</p>
-          <div class="drawer-tags">${renderReadingTags(reading.tags)}</div>
-          <div class="reading-actions">
-            <button class="pill primary" id="openLatestReading">阅读详情</button>
+      function renderArticleDetail(post) {
+        return `
+          <div class="drawer-tags">
+            <span>${post.tag}</span>
+            <span>${post.readTime}</span>
+            <span>${post.date}</span>
+          </div>
+          <div class="detail-grid">
+            <section class="detail-section">
+              <h3>今日晨读</h3>
+              <ul>
+                <li>${post.summary}</li>
+              </ul>
+            </section>
+            <section class="detail-section">
+              <h3>本篇内容</h3>
+              <ul>
+                <li>${post.detail}</li>
+              </ul>
+            </section>
           </div>
         `;
-        document.getElementById("openLatestReading").addEventListener("click", () => openReading(reading));
       }
 
-      function renderReadingList(readings = []) {
-        if (!readings.length) {
-          readingList.innerHTML = '<p class="reading-status">暂无历史归档。</p>';
-          return;
-        }
+      function openArticleDetail(post) {
+        lastBlogFocused = document.activeElement;
+        articleDetailType.textContent = post.tag;
+        articleDetailLabel.textContent = post.tag;
+        articleDetailTitle.textContent = post.title;
+        articleDetailBody.textContent = post.summary;
+        articleDetailMeta.textContent = `${post.date} · ${post.readTime}`;
+        articleDetailContent.innerHTML = renderArticleDetail(post);
+        showView("article-detail");
+        stage.scrollTo({ top: 0, behavior: "smooth" });
+        backToBlogBtn.focus();
+      }
 
-        readingList.innerHTML = "";
-        readings.forEach(reading => {
-          const button = document.createElement("button");
-          button.className = "reading-item";
-          button.innerHTML = `
-            <h4>${formatReadingDate(reading.date)}</h4>
-            <span>${escapeHtml(reading.summary || reading.title || "")}</span>
+      function backToBlog() {
+        showView("blog");
+        stage.scrollTo({ top: 0, behavior: "smooth" });
+        if (lastBlogFocused) lastBlogFocused.focus();
+      }
+
+      function renderBlog() {
+        blogList.innerHTML = "";
+        blogPosts.forEach(post => {
+          const card = document.createElement("article");
+          card.className = "row-card reading-card";
+          card.tabIndex = 0;
+          card.setAttribute("role", "button");
+          card.setAttribute("aria-label", `查看${post.title}`);
+          card.innerHTML = `
+            <div class="reading-poster" aria-hidden="true">
+              <img src="${post.poster}" alt="" loading="lazy" decoding="async" />
+            </div>
+            <div class="reading-copy">
+              <div>
+                <h3>${post.summary}</h3>
+              </div>
+              <time class="reading-date" datetime="${post.isoDate}">${post.date}</time>
+            </div>
           `;
-          button.addEventListener("click", async () => {
-            const detail = await fetchReadingDetail(reading);
-            openReading(detail || reading);
+          const openPost = () => openArticleDetail(post);
+          card.addEventListener("click", openPost);
+          card.addEventListener("keydown", e => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              openPost();
+            }
           });
-          readingList.appendChild(button);
+          blogList.appendChild(card);
         });
       }
 
-      async function fetchReadingDetail(reading) {
-        if (reading.contentMarkdown) return reading;
-        if (!reading.path) return reading;
-        try {
-          const response = await fetch(reading.path, { cache: "no-store" });
-          if (!response.ok) return reading;
-          return await response.json();
-        } catch {
-          return reading;
-        }
-      }
-
-      async function loadReadings() {
-        try {
-          const [latestResponse, indexResponse] = await Promise.all([
-            fetch(readingEndpoints.latest, { cache: "no-store" }),
-            fetch(readingEndpoints.index, { cache: "no-store" })
-          ]);
-
-          const latest = latestResponse.ok ? await latestResponse.json() : null;
-          const index = indexResponse.ok ? await indexResponse.json() : { readings: [] };
-          renderLatestReading(latest);
-          renderReadingList(index.readings || []);
-        } catch {
-          latestReading.innerHTML = '<p class="reading-status">晨读内容读取失败，请稍后刷新。</p>';
-          readingList.innerHTML = '<p class="reading-status">历史归档读取失败。</p>';
-        }
-      }
+      backToBlogBtn.addEventListener("click", backToBlog);
 
       /* ── 工具箱 ── */
       const resourceList = document.getElementById("resourceList");
 
       function renderResources(type = "design") {
         resourceList.innerHTML = "";
-        const items = resourceGroups[type] || [];
-        if (!items.length) {
-          resourceList.innerHTML = '<p class="reading-status">暂无已发布工具资源。</p>';
-          return;
-        }
-
-        items.forEach(({ name, desc, url }) => {
+        resources[type].forEach(({ name, desc, url }) => {
           const card = document.createElement("a");
           card.className = "row-card";
           card.href = url;
@@ -1624,23 +1600,6 @@
           card.innerHTML = `<h3>${name}</h3><p>${desc}</p><div class="tagline">↗ 打开工具</div>`;
           resourceList.appendChild(card);
         });
-      }
-
-      async function loadResources() {
-        try {
-          const response = await fetch(toolEndpoint, { cache: "no-store" });
-          if (!response.ok) {
-            renderResources();
-            return;
-          }
-          const data = await response.json();
-          resourceGroups = { ...defaultResourceGroups, ...(data.groups || {}) };
-          const active = document.querySelector("[data-resource].active")?.dataset.resource || "design";
-          renderResources(active);
-        } catch {
-          resourceGroups = { ...defaultResourceGroups };
-          renderResources();
-        }
       }
 
       document.querySelectorAll("[data-resource]").forEach(btn => {
@@ -1667,8 +1626,8 @@
 
       /* ── 初始化 ── */
       renderCases();
-      loadReadings();
-      loadResources();
+      renderBlog();
+      renderResources();
     </script>
   </body>
 </html>
