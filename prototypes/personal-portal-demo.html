@@ -188,9 +188,9 @@
 
       /* ── Home ── */
       .home-view {
-        grid-template-columns: minmax(0, 1fr);
-        align-items: start;
-        gap: clamp(20px, 4vh, 42px);
+        grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+        align-items: center;
+        gap: clamp(28px, 4vw, 72px);
         height: calc(100dvh - 89px);
         min-height: calc(100dvh - 89px);
         overflow: hidden;
@@ -198,7 +198,7 @@
         padding-bottom: clamp(28px, 5vh, 56px);
       }
 
-      .home-view > .hero-block { max-width: 800px; }
+      .home-view > .hero-block { max-width: 760px; }
 
       .eyebrow {
         margin: 0 0 18px;
@@ -212,19 +212,27 @@
       h1, h2, h3, p { margin-top: 0; }
 
       .hero-title {
-        margin-bottom: 14px;
-        font-size: clamp(42px, 6.4vw, 84px);
-        line-height: 0.95;
+        margin-bottom: 18px;
+        font-size: clamp(52px, 7vw, 112px);
+        line-height: 0.9;
         font-weight: 900;
         text-transform: uppercase;
         text-wrap: balance;
+        perspective: 600px;
       }
 
       .hero-title span {
         display: inline-block;
-        background: linear-gradient(90deg, #ffffff 0%, #dce9f1 46%, rgba(0, 215, 255, 0.78) 100%);
+        transform: skew(-7deg) rotateX(5deg);
+        background: linear-gradient(180deg, #ffffff 0%, #dfe7ec 42%, #8f9ba6 100%);
         -webkit-background-clip: text;
         color: transparent;
+        text-shadow:
+          0 1px 0 rgba(255, 255, 255, 0.82),
+          0 8px 0 rgba(95, 108, 120, 0.45),
+          0 18px 32px rgba(0, 0, 0, 0.66),
+          0 0 28px rgba(0, 215, 255, 0.18);
+        filter: drop-shadow(12px 18px 0 rgba(0, 0, 0, 0.28));
       }
 
       .hero-role {
@@ -232,6 +240,16 @@
         color: #dfe7ee;
         font-size: clamp(16px, 1.8vw, 22px);
         letter-spacing: 0.22em;
+      }
+
+      .hero-mark {
+        width: clamp(112px, 14vw, 190px);
+        height: 34px;
+        margin: 0 0 24px 4px;
+        border-radius: 4px;
+        background: linear-gradient(105deg, #ff8a1c 0%, #ff5e1c 58%, rgba(255, 255, 255, 0.8) 100%);
+        transform: skew(-12deg);
+        box-shadow: 0 16px 34px rgba(255, 107, 28, 0.24), 0 6px 0 rgba(0, 0, 0, 0.3);
       }
 
       /* Info tags */
@@ -323,6 +341,66 @@
       .ability-item span {
         color: var(--muted);
         font-size: 12px;
+      }
+
+      .showcase-grid {
+        align-self: stretch;
+        min-height: 0;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: 1fr 0.72fr;
+        gap: 16px;
+      }
+
+      .showcase-card {
+        position: relative;
+        min-height: 0;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 8px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.34);
+      }
+
+      .showcase-card:first-child {
+        grid-row: span 2;
+      }
+
+      .showcase-card img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        filter: saturate(1.08) contrast(1.04);
+      }
+
+      .showcase-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(180deg, rgba(4, 6, 10, 0.08), rgba(4, 6, 10, 0.74)),
+          linear-gradient(120deg, rgba(0, 215, 255, 0.08), transparent 42%, rgba(255, 61, 242, 0.14));
+        pointer-events: none;
+      }
+
+      .showcase-label {
+        position: absolute;
+        left: 18px;
+        right: 18px;
+        bottom: 16px;
+        z-index: 1;
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        color: var(--text);
+        font-weight: 700;
+        text-shadow: 0 6px 18px rgba(0, 0, 0, 0.62);
+      }
+
+      .showcase-label span {
+        color: var(--warm);
+        font-size: 13px;
       }
 
       /* ── Section shared ── */
@@ -523,8 +601,8 @@
       /* ── Blog & Resource list ── */
       .blog-list {
         display: grid;
-        grid-template-columns: 1fr;
-        gap: 18px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
       }
 
       .resource-list {
@@ -564,60 +642,53 @@
 
       .reading-card {
         display: grid;
-        grid-template-columns: minmax(132px, 22%) minmax(0, 1fr);
-        min-height: 128px;
-        padding: 0;
-        overflow: hidden;
-      }
-
-      .reading-poster {
-        position: relative;
-        min-height: 128px;
-        overflow: hidden;
-        border-right: 1px solid var(--line);
-        background: var(--panel-strong);
-      }
-
-      .reading-poster img {
-        width: 100%;
-        height: 100%;
-        min-height: 128px;
-        display: block;
-        object-fit: cover;
-        object-position: center;
-        transition: transform 220ms ease;
-      }
-
-      .reading-card:hover .reading-poster img {
-        transform: scale(1.03);
+        grid-template-columns: 92px minmax(0, 1fr);
+        min-height: 150px;
+        padding: 12px;
+        gap: 14px;
+        align-items: stretch;
       }
 
       .reading-copy {
         display: flex;
-        min-height: 128px;
+        min-height: 126px;
         flex-direction: column;
         justify-content: space-between;
-        gap: 10px;
-        padding: 14px 18px;
+        gap: 8px;
       }
 
       .reading-copy h3 {
         max-width: none;
         margin: 0;
-        font-size: 21px;
-        line-height: 1.28;
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        font-size: 16px;
+        line-height: 1.45;
         font-weight: 600;
       }
 
-      .reading-preview {
-        margin: 0;
-        color: var(--muted);
-        font-size: 13px;
-        line-height: 1.55;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
+      .reading-poster {
+        position: relative;
+        min-height: 126px;
+        border-radius: 8px;
         overflow: hidden;
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .reading-poster img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+      }
+
+      .reading-poster::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.28));
       }
 
       .reading-date {
@@ -632,7 +703,7 @@
 
       .reading-date::before {
         content: "";
-        width: 34px;
+        width: 24px;
         height: 1px;
         background: color-mix(in srgb, var(--warm) 68%, transparent);
       }
@@ -941,6 +1012,10 @@
         line-height: 1.8;
       }
 
+      .article-detail-view .detail-summary:empty {
+        display: none;
+      }
+
       .detail-side {
         padding: 20px;
         border: 1px solid rgba(255, 255, 255, 0.14);
@@ -1027,29 +1102,16 @@
         }
 
         .cards,
+        .blog-list,
         .resource-list,
+        .showcase-grid,
         .ability-strip {
           grid-template-columns: 1fr;
         }
 
         .case-cover { height: 190px; }
-        .reading-card {
-          grid-template-columns: 1fr;
-        }
-
-        .reading-poster {
-          min-height: 128px;
-          border-right: 0;
-          border-bottom: 1px solid var(--line);
-        }
-
-        .reading-poster img {
-          min-height: 128px;
-        }
-
-        .reading-copy {
-          min-height: auto;
-        }
+        .reading-copy { min-height: auto; }
+        .showcase-grid { display: none; }
 
         .detail-hero {
           grid-template-columns: 1fr;
@@ -1102,6 +1164,7 @@
         <section class="view home-view active" data-panel="home">
           <div class="hero-block">
             <p class="eyebrow">Wuhan</p>
+            <div class="hero-mark" aria-hidden="true"></div>
             <h1 class="hero-title"><span>产品设计与 AI 原型实践</span></h1>
             <p class="hero-role">从 UI/UX 到产品方案落地</p>
             <div class="info-tags" aria-label="基本信息">
@@ -1121,19 +1184,19 @@
             </div>
           </div>
 
-          <div class="ability-strip" aria-label="能力摘要">
-            <div class="ability-item">
-              <strong>UI/UX</strong>
-              <span>设计系统、交互、体验评审</span>
-            </div>
-            <div class="ability-item">
-              <strong>PM</strong>
-              <span>需求拆解、流程、排期推进</span>
-            </div>
-            <div class="ability-item">
-              <strong>AI</strong>
-              <span>原型提效、知识整理、工具链</span>
-            </div>
+          <div class="showcase-grid" aria-label="作品集封面预览">
+            <figure class="showcase-card">
+              <img src="assets/portfolio/admission-dashboard.png" alt="招生概况数据大屏作品封面" />
+              <figcaption class="showcase-label">招生概况数据大屏 <span>01</span></figcaption>
+            </figure>
+            <figure class="showcase-card">
+              <img src="assets/portfolio/portal-framework.png" alt="门户功能架构作品封面" />
+              <figcaption class="showcase-label">门户功能架构 <span>02</span></figcaption>
+            </figure>
+            <figure class="showcase-card">
+              <img src="assets/portfolio/wuhan-sakura.png" alt="武汉大学樱花预约作品封面" />
+              <figcaption class="showcase-label">樱花预约体验 <span>03</span></figcaption>
+            </figure>
           </div>
         </section>
 
@@ -1871,14 +1934,10 @@
         const mainContent = detailMarkdown
           ? markdownToHtml(detailMarkdown)
           : `<section class="detail-section"><p>内容正在同步中，请稍后查看。</p></section>`;
-        const trendSummary = post.trendSummary || post.detail;
 
         return `
           <div class="drawer-tags">${renderSafeTagList(tags)}</div>
           <div class="article-detail-content">
-            <section class="detail-section article-summary article-description">
-              <p><strong>趋势摘要</strong>${escapeHtml(trendSummary)}</p>
-            </section>
             <section class="article-detail-block" aria-label="文章正文">
               ${mainContent}
             </section>
@@ -1896,7 +1955,7 @@
         articleDetailType.textContent = detail.tag;
         articleDetailLabel.textContent = detail.tag;
         articleDetailTitle.textContent = detail.listSummary || detail.summary;
-        articleDetailBody.textContent = detail.trendTitle || detail.title;
+        articleDetailBody.textContent = "";
         articleDetailMeta.textContent = detail.dateText;
         articleDetailMeta.dateTime = detail.isoDate || "";
         articleDetailContent.innerHTML = renderArticleDetail(detail);
@@ -1925,14 +1984,14 @@
           card.setAttribute("aria-label", `查看${post.title}`);
           card.innerHTML = `
             <div class="reading-poster" aria-hidden="true">
-              <img src="${post.poster}" alt="" loading="lazy" decoding="async" />
+              <img src="${escapeHtml(post.poster || readingAssets.wednesday)}" alt="" loading="lazy" decoding="async" />
             </div>
             <div class="reading-copy">
               <div>
                 <h3>${post.summary}</h3>
-                <p class="reading-preview">${escapeHtml(post.trendSummary || post.detail || post.listSummary || "")}</p>
               </div>
               <time class="reading-date" datetime="${post.isoDate}">${post.dateText}</time>
+              <div class="tagline">${escapeHtml(post.tag || "晨读")} · ${escapeHtml(post.readTime || "")}</div>
             </div>
           `;
           const openPost = () => openArticleDetail(post);
