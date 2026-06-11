@@ -188,7 +188,7 @@
 
       /* ── Home ── */
       .home-view {
-        grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+        grid-template-columns: minmax(0, 1fr);
         align-items: center;
         gap: clamp(28px, 4vw, 72px);
         height: calc(100dvh - 89px);
@@ -198,7 +198,7 @@
         padding-bottom: clamp(28px, 5vh, 56px);
       }
 
-      .home-view > .hero-block { max-width: 760px; }
+      .home-view > .hero-block { max-width: 880px; }
 
       .eyebrow {
         margin: 0 0 18px;
@@ -346,7 +346,7 @@
       .showcase-grid {
         align-self: stretch;
         min-height: 0;
-        display: grid;
+        display: none;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         grid-template-rows: 1fr 0.72fr;
         gap: 16px;
