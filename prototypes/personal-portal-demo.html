@@ -601,8 +601,39 @@
       /* ── Blog & Resource list ── */
       .blog-list {
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 16px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px 20px;
+      }
+
+      .reading-month-heading {
+        grid-column: 1 / -1;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 8px 0 2px;
+        color: var(--text);
+      }
+
+      .reading-month-heading strong {
+        color: var(--magenta);
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+
+      .reading-month-heading span {
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 24px;
+        white-space: nowrap;
+      }
+
+      .reading-month-heading::after {
+        content: "";
+        height: 1px;
+        flex: 1;
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0.22), transparent);
       }
 
       .resource-list {
@@ -642,16 +673,16 @@
 
       .reading-card {
         display: grid;
-        grid-template-columns: minmax(168px, 62%) minmax(0, 1fr);
-        min-height: 132px;
+        grid-template-columns: minmax(190px, 42%) minmax(0, 1fr);
+        min-height: 156px;
         padding: 12px;
-        gap: 12px;
+        gap: 16px;
         align-items: center;
       }
 
       .reading-copy {
         display: flex;
-        min-height: 96px;
+        min-height: 118px;
         flex-direction: column;
         justify-content: space-between;
         gap: 8px;
@@ -663,8 +694,8 @@
         display: -webkit-box;
         overflow: hidden;
         -webkit-box-orient: vertical;
-        -webkit-line-clamp: 4;
-        font-size: 14px;
+        -webkit-line-clamp: 3;
+        font-size: 17px;
         line-height: 1.45;
         font-weight: 600;
       }
@@ -1873,6 +1904,14 @@
         }).format(new Date(`${date}T00:00:00+08:00`));
       }
 
+      function formatArticleMonth(date) {
+        if (!date) return "未设置月份";
+        return new Intl.DateTimeFormat("zh-CN", {
+          year: "numeric",
+          month: "long"
+        }).format(new Date(`${date}T00:00:00+08:00`));
+      }
+
       function getReadingPoster(date) {
         const weekday = new Date(`${date}T00:00:00+08:00`).getDay();
         const posterMap = {
@@ -1978,7 +2017,21 @@
           blogList.innerHTML = '<p class="reading-status">暂无已发布晨读。</p>';
           return;
         }
+        const monthCounts = posts.reduce((counts, post) => {
+          const month = formatArticleMonth(post.isoDate);
+          counts.set(month, (counts.get(month) || 0) + 1);
+          return counts;
+        }, new Map());
+        let currentMonth = "";
         posts.forEach(post => {
+          const month = formatArticleMonth(post.isoDate);
+          if (month !== currentMonth) {
+            currentMonth = month;
+            const heading = document.createElement("div");
+            heading.className = "reading-month-heading";
+            heading.innerHTML = `<strong>${escapeHtml(month)}</strong><span>· ${monthCounts.get(month) || 0} 篇文章</span>`;
+            blogList.appendChild(heading);
+          }
           const card = document.createElement("article");
           card.className = "row-card reading-card";
           card.tabIndex = 0;
