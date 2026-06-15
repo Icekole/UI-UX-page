@@ -1,0 +1,27 @@
+<svg width="960" height="640" viewBox="0 0 960 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="640" fill="#08111A"/>
+  <rect x="54" y="58" width="852" height="524" rx="28" fill="#101C28" stroke="#24364A" stroke-width="2"/>
+  <rect x="96" y="104" width="348" height="392" rx="22" fill="#132B3A" stroke="#2D4A5C" stroke-width="2"/>
+  <rect x="516" y="104" width="348" height="392" rx="22" fill="#251B35" stroke="#463358" stroke-width="2"/>
+  <path d="M134 178H316" stroke="#78D5FF" stroke-width="10" stroke-linecap="round"/>
+  <path d="M134 224H380" stroke="#D7E7F3" stroke-width="8" stroke-linecap="round" opacity="0.86"/>
+  <path d="M134 264H340" stroke="#D7E7F3" stroke-width="8" stroke-linecap="round" opacity="0.62"/>
+  <rect x="134" y="324" width="108" height="90" rx="16" fill="#1F4B5F"/>
+  <rect x="264" y="324" width="108" height="90" rx="16" fill="#263F54"/>
+  <path d="M154 352H216" stroke="#78D5FF" stroke-width="7" stroke-linecap="round"/>
+  <path d="M154 382H204" stroke="#D7E7F3" stroke-width="6" stroke-linecap="round" opacity="0.74"/>
+  <path d="M284 352H344" stroke="#78D5FF" stroke-width="7" stroke-linecap="round"/>
+  <path d="M284 382H330" stroke="#D7E7F3" stroke-width="6" stroke-linecap="round" opacity="0.74"/>
+  <path d="M558 176H752" stroke="#FFCF6D" stroke-width="10" stroke-linecap="round"/>
+  <path d="M558 224H818" stroke="#EFE4FF" stroke-width="8" stroke-linecap="round" opacity="0.86"/>
+  <path d="M558 264H764" stroke="#EFE4FF" stroke-width="8" stroke-linecap="round" opacity="0.62"/>
+  <circle cx="610" cy="368" r="48" fill="#4B315D"/>
+  <circle cx="742" cy="368" r="48" fill="#59324E"/>
+  <path d="M590 368H630" stroke="#FFCF6D" stroke-width="8" stroke-linecap="round"/>
+  <path d="M722 348H762" stroke="#FF7BA7" stroke-width="8" stroke-linecap="round"/>
+  <path d="M722 388H762" stroke="#FF7BA7" stroke-width="8" stroke-linecap="round"/>
+  <path d="M480 126V514" stroke="#2B3B4A" stroke-width="2" stroke-dasharray="10 14"/>
+  <text x="134" y="558" fill="#78D5FF" font-family="PingFang SC, Arial, sans-serif" font-size="34" font-weight="700">产品深读</text>
+  <text x="558" y="558" fill="#FFCF6D" font-family="PingFang SC, Arial, sans-serif" font-size="34" font-weight="700">资讯观察</text>
+  <text x="96" y="86" fill="#9FB2C3" font-family="PingFang SC, Arial, sans-serif" font-size="18" font-weight="500" letter-spacing="4">WEEKLY UI / PRODUCT READING</text>
+</svg>
